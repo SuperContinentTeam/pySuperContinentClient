@@ -1,15 +1,14 @@
 import sys
-import multiprocessing
 
 from PyQt5.QtWidgets import QApplication
-from gui.main_window import MainWindow
+from gui.start_window import StartWindow
 
 
 def start_gui():
     app = QApplication(sys.argv)
 
-    main_window = MainWindow()
-    main_window.show()
+    start_window = StartWindow()
+    start_window.show()
 
     sys.exit(app.exec_())
 
