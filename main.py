@@ -5,12 +5,15 @@ from gui.start_window import StartWindow
 
 
 def start_gui():
-    app = QApplication(sys.argv)
+    try:
+        app = QApplication(sys.argv)
     
-    start_window = StartWindow()
-    start_window.show()
+        start_window = StartWindow()
+        start_window.show()
+        sys.exit(app.exec_())
 
-    sys.exit(app.exec_())
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':
