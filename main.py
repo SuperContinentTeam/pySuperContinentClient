@@ -6,7 +6,7 @@ from gui.start_window import StartWindow
 
 def start_gui():
     app = QApplication(sys.argv)
-
+    
     start_window = StartWindow()
     start_window.show()
 
