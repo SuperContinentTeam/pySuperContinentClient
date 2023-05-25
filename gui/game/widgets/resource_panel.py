@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPainter
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt
 
 from utils.size import GAME_WIDTH, RESOURCE_ITEM_HEIGHT, GAME_TOP, GAME_LEFT, DX, GAME_RIGHT
 from utils.reference import format_number, image
