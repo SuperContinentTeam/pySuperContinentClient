@@ -1,4 +1,3 @@
-from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QApplication
 from utils.settings import TITLE
 
