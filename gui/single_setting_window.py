@@ -43,11 +43,11 @@ class SingleSettingWindow(QMainWindow):
 
         layout.addWidget(QLabel("AI数量"), 1, 0)
         self.slider_ai_count = QSlider(Qt.Horizontal)
-        self.slider_ai_count.setMinimum(1)
-        self.slider_ai_count.setMaximum(4)
+        self.slider_ai_count.setMinimum(0)
+        self.slider_ai_count.setMaximum(20)
         self.slider_ai_count.valueChanged.connect(self.slider_ai_count_change_value)
         layout.addWidget(self.slider_ai_count, 1, 1)
-        self.label_ai_count = QLabel(f"{self.slider_ai_count.value()} (未启用)")
+        self.label_ai_count = QLabel(f"{self.slider_ai_count.value()} (该功能未启用)")
         layout.addWidget(self.label_ai_count, 1, 2)
 
         self.combo_box_resource = QComboBox()
@@ -73,7 +73,7 @@ class SingleSettingWindow(QMainWindow):
         self.check_box_active_ai = QCheckBox()
         self.check_box_active_ai.stateChanged.connect(self.active_ai_mode)
         layout.addWidget(self.check_box_active_ai, 5, 1)
-        layout.addWidget(QLabel("(未启用)"), 5, 2)
+        layout.addWidget(QLabel("(该功能未启用)"), 5, 2)
 
         layout.addWidget(QLabel("导入AI模型"), 6, 0)
         layout.addWidget(QLineEdit(""), 6, 1)
@@ -109,7 +109,7 @@ class SingleSettingWindow(QMainWindow):
 
     def slider_ai_count_change_value(self):
         value = self.slider_ai_count.value()
-        self.label_ai_count.setText(f"{value} (未启用)")
+        self.label_ai_count.setText(f"{value} (该功能未启用)")
         self.argumensts["aiCount"] = value
 
     def click_game_start(self):
