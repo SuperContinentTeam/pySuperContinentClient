@@ -18,7 +18,7 @@ class StartWindow(QMainWindow):
         btn_multi = QPushButton("多人模式", self)
         btn_setting = QPushButton("游戏设置", self)
 
-        btn_quit = QPushButton("退出游�?, self)
+        btn_quit = QPushButton("退出游戏", self)
         btn_quit.clicked.connect(QApplication.quit)
 
         v_box.addWidget(btn_single)
