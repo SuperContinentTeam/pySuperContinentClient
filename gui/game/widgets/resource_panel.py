@@ -12,6 +12,46 @@ class ResourceItemPanel:
         self.storage = storage
         self.monthly = monthly
 
+    def draw(self, painter: QPainter, start_x: int, width: int, flag):
+        painter.drawRect(
+            start_x,
+            GAME_TOP,
+            width,
+            RESOURCE_ITEM_HEIGHT
+        )
+
+        painter.drawPixmap(
+            start_x,
+            GAME_TOP,
+            RESOURCE_ITEM_HEIGHT,
+            RESOURCE_ITEM_HEIGHT,
+            image(self.name)
+        )
+
+        if self.monthly < 0:
+            painter.setPen(RED)
+
+        painter.drawText(
+            start_x + RESOURCE_ITEM_HEIGHT + DX * 5,
+            GAME_TOP,
+            width - RESOURCE_ITEM_HEIGHT,
+            RESOURCE_ITEM_HEIGHT // 2,
+            flag,
+            format_number(self.storage)
+        )
+
+        painter.drawText(
+            start_x + RESOURCE_ITEM_HEIGHT + DX * 5,
+            GAME_TOP + RESOURCE_ITEM_HEIGHT // 2,
+            width - RESOURCE_ITEM_HEIGHT,
+            RESOURCE_ITEM_HEIGHT // 2,
+            flag,
+            format_number(self.monthly, True)
+        )
+
+        if self.monthly < 0:
+            painter.setPen(BLACK)
+
 
 class ResourcePanel:
     items = ("energy", "mineral", "food", "customer",
@@ -29,48 +69,12 @@ class ResourcePanel:
 
     def draw(self, painter: QPainter):
         item_width = GAME_WIDTH // len(self.items)
-        flags = Qt.AlignLeft | Qt.AlignVCenter
+        flag = Qt.AlignLeft | Qt.AlignVCenter
 
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
+
         for i, item in enumerate(self.items):
             start_x = item_width * i + GAME_LEFT
-
-            painter.drawRect(
-                start_x,
-                GAME_TOP,
-                item_width,
-                RESOURCE_ITEM_HEIGHT
-            )
-            painter.drawPixmap(
-                start_x,
-                GAME_TOP,
-                RESOURCE_ITEM_HEIGHT,
-                RESOURCE_ITEM_HEIGHT,
-                image(item)
-            )
-
             r: ResourceItemPanel = getattr(self, item)
-            if r.monthly < 0:
-                painter.setPen(RED)
-
-            painter.drawText(
-                start_x + RESOURCE_ITEM_HEIGHT + DX * 5,
-                GAME_TOP,
-                item_width - RESOURCE_ITEM_HEIGHT,
-                RESOURCE_ITEM_HEIGHT // 2,
-                flags,
-                format_number(r.storage)
-            )
-
-            painter.drawText(
-                start_x + RESOURCE_ITEM_HEIGHT + DX * 5,
-                GAME_TOP + RESOURCE_ITEM_HEIGHT // 2,
-                item_width - RESOURCE_ITEM_HEIGHT,
-                RESOURCE_ITEM_HEIGHT // 2,
-                flags,
-                format_number(r.monthly, True)
-            )
-
-            if r.monthly < 0:
-                painter.setPen(BLACK)
+            r.draw(painter, start_x, item_width, flag)
