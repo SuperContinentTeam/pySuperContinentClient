@@ -32,10 +32,11 @@ class MainGamePanel(QMainWindow):
         return super().closeEvent(a0)
 
     def center(self):
-        # 获取屏幕的大小
+        # 获取屏幕的大�?
         screen = QDesktopWidget().screenGeometry()
-        # 计算窗口居中时的左上角位置
+        # 计算窗口居中时的左上角位�?
         x = (screen.width() - WIDTH) // 2
         y = (screen.height() - HEIGHT) // 2
-        # 移动窗口到居中位置
+        # 移动窗口到居中位�?
         self.move(x, y)
+

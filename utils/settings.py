@@ -8,3 +8,4 @@ NAME = "SuperContinent"
 VERSION = "0.0.1"
 
 TITLE = f"{NAME} v{VERSION}"
+

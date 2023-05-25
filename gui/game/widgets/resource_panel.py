@@ -78,3 +78,4 @@ class ResourcePanel:
             start_x = item_width * i + GAME_LEFT
             r: ResourceItemPanel = getattr(self, item)
             r.draw(painter, start_x, item_width, flag)
+
