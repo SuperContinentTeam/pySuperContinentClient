@@ -4,5 +4,7 @@ BASE_DIR = Path(__file__).parent.parent.absolute()
 
 TITLE = "SuperContinent"
 
-WIDTH = 1280
-HEIGHT = 720
+
+class CommonSize:
+    WIDTH = 1280
+    HEIGHT = 720

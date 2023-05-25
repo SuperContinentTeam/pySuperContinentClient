@@ -1,17 +1,25 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from gui.start_window import StartWindow
+from PyQt5.QtGui import QColor
+# from gui.start_window import StartWindow
+from gui.game.main_panel import MainGamePanel
 
 
 def start_gui():
     try:
         app = QApplication(sys.argv)
-    
-        start_window = StartWindow()
+        # start_window = StartWindow()
+        arguments = {'activeAiModel': False,
+                     'aiCount': 0,
+                     'aiModelPath': '',
+                     'empireColor': QColor(255, 0, 0),
+                     'empireName': '',
+                     'resourceRatio': 1,
+                     'worldSize': 10}
+        start_window = MainGamePanel(argumensts=arguments)
         start_window.show()
         sys.exit(app.exec_())
-
     except Exception as e:
         print(e)
 

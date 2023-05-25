@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QMainWindow, QGridLayout, QPushButton, QLabel, QWidget, QLineEdit,
     QSlider, QComboBox, QColorDialog, QCheckBox
 )
+from gui.game.main_panel import MainGamePanel
 
 from utils.settings import TITLE
 from utils.colors import BLACK
@@ -113,7 +114,10 @@ class SingleSettingWindow(QMainWindow):
         self.argumensts["aiCount"] = value
 
     def click_game_start(self):
-        pprint(self.argumensts)
+        self.close()
+        self.last_window.close()
+        temp = MainGamePanel(parent=self.last_window, argumensts=self.argumensts)
+        temp.show()
 
     def closeEvent(self, a0) -> None:
         self.last_window.show()
