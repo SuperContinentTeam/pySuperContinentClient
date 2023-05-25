@@ -5,6 +5,7 @@ from gui.game.widgets.message_panel import MessageBoxPanel
 from gui.game.widgets.resource_panel import ResourcePanel
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.fliter_panel import FliterPanel
+from gui.game.widgets.zoning_panel import ZoningPanel
 
 from utils.settings import TITLE
 from utils.size import WIDTH, HEIGHT
@@ -29,12 +30,15 @@ class MainGamePanel(QMainWindow):
         self.world = WorldPanel()
         # 滤镜板块
         self.fliter_panel = FliterPanel()
+        # 区划板块
+        self.zoning_panel = ZoningPanel()
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
         self.resource_panel.draw(painter)
         self.world.draw(painter)
         self.fliter_panel.draw(painter)
+        self.zoning_panel.draw(painter)
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         pos = a0.pos()
