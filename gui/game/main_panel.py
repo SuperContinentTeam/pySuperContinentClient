@@ -1,17 +1,29 @@
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
-from utils.settings import TITLE, CommonSize
+from PyQt5.QtGui import QPainter, QPaintEvent
 
+from gui.game.widgets.resource_panel import ResourcePanel
 
+from utils.settings import TITLE
+from utils.size import WIDTH, HEIGHT
+from utils.reference import image
 
 class MainGamePanel(QMainWindow):
     def __init__(self, argumensts, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.last_window = self.parent()
+        # 初始参数
         self.arguments = argumensts
 
         self.setWindowTitle(TITLE)
-        self.resize(CommonSize.WIDTH, CommonSize.HEIGHT)
+        self.resize(WIDTH, HEIGHT)
         self.center()
+
+        # 资源板块
+        self.resource_panel = ResourcePanel()
+
+    def paintEvent(self, a0: QPaintEvent) -> None:
+        painter = QPainter(self)
+        self.resource_panel.draw(painter)
 
     def closeEvent(self, a0) -> None:
         if self.last_window:
@@ -22,10 +34,8 @@ class MainGamePanel(QMainWindow):
     def center(self):
         # 获取屏幕的大小
         screen = QDesktopWidget().screenGeometry()
-        # 获取窗口的大小
-        window_size = self.geometry()
         # 计算窗口居中时的左上角位置
-        x = (screen.width() - window_size.width()) // 2
-        y = (screen.height() - window_size.height()) // 2
+        x = (screen.width() - WIDTH) // 2
+        y = (screen.height() - HEIGHT) // 2
         # 移动窗口到居中位置
         self.move(x, y)

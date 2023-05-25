@@ -1,10 +1,10 @@
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent.parent.absolute()
+ASSET_DIR = BASE_DIR.joinpath("assets")
+IMAGE_DIR = ASSET_DIR.joinpath("images")
 
-TITLE = "SuperContinent"
+NAME = "SuperContinent"
+VERSION = "0.0.1"
 
-
-class CommonSize:
-    WIDTH = 1280
-    HEIGHT = 720
+TITLE = f"{NAME} v{VERSION}"
