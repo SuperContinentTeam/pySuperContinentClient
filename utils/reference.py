@@ -24,3 +24,5 @@ def format_number(number, monthly=False):
         result = "MAX"
 
     return f"{pre}{result}"
+
+

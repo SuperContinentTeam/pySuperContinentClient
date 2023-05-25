@@ -35,3 +35,5 @@ class StartWindow(QMainWindow):
         next_window = SingleSettingWindow(self)
         next_window.show()
 
+
+

@@ -127,3 +127,5 @@ class SingleSettingWindow(QMainWindow):
     def close_window(self):
         self.close()
 
+
+

@@ -79,3 +79,5 @@ class ResourcePanel:
             r: ResourceItemPanel = getattr(self, item)
             r.draw(painter, start_x, item_width, flag)
 
+
+

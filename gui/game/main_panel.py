@@ -40,3 +40,5 @@ class MainGamePanel(QMainWindow):
         # 移动窗口到居中位�?
         self.move(x, y)
 
+
+

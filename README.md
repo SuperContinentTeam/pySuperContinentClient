@@ -20,3 +20,5 @@ rect = QRect(x, y, img.width()/2, img.height()/2)
 painter.drawImage(rect, img)
 
 ```
+
+
