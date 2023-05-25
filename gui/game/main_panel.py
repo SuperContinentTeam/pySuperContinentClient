@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
-from PyQt5.QtGui import QPainter, QPaintEvent
+from PyQt5.QtGui import QPainter, QPaintEvent, QMouseEvent
+from PyQt5.QtCore import Qt
 
 from gui.game.widgets.resource_panel import ResourcePanel
 
@@ -25,6 +26,14 @@ class MainGamePanel(QMainWindow):
         painter = QPainter(self)
         self.resource_panel.draw(painter)
 
+    def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
+        pos = a0.pos()
+        button = a0.button()
+
+        x, y = pos.x(), pos.y()
+        
+        self.resource_panel.click(x, y, button)
+
     def closeEvent(self, a0) -> None:
         if self.last_window:
             self.last_window.show()
@@ -32,12 +41,11 @@ class MainGamePanel(QMainWindow):
         return super().closeEvent(a0)
 
     def center(self):
-        # 获取屏幕的大�?
         screen = QDesktopWidget().screenGeometry()
-        # 计算窗口居中时的左上角位�?
+
         x = (screen.width() - WIDTH) // 2
         y = (screen.height() - HEIGHT) // 2
-        # 移动窗口到居中位�?
+
         self.move(x, y)
 
 

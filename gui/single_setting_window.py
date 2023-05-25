@@ -84,7 +84,7 @@ class SingleSettingWindow(QMainWindow):
         btn_back.clicked.connect(self.close_window)
         layout.addWidget(btn_back, 7, 2)
 
-        btn_start = QPushButton("开�?, self)
+        btn_start = QPushButton("开始游戏", self)
         btn_start.clicked.connect(self.click_game_start)
         layout.addWidget(btn_start, 8, 2)
 

@@ -1,7 +1,7 @@
 from PyQt5.QtGui import QPainter
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QPoint
 
-from utils.size import GAME_WIDTH, RESOURCE_ITEM_HEIGHT, GAME_TOP, GAME_LEFT, DX
+from utils.size import GAME_WIDTH, RESOURCE_ITEM_HEIGHT, GAME_TOP, GAME_LEFT, DX, GAME_RIGHT
 from utils.reference import format_number, image
 from utils.colors import BLACK, WHITE, RED
 
@@ -61,23 +61,38 @@ class ResourcePanel:
         for item in self.items:
             setattr(self, item, ResourceItemPanel(item))
 
+        self.item_width = GAME_WIDTH // len(self.items)
+
     def init(self, arguments: dict):
         for item in self.items:
             if arg := arguments.get(item):
                 setattr(getattr(self, item), "storage", arg["storage"])
                 setattr(getattr(self, item), "monthly", arg["monthly"])
 
+    def check_in(self, x, y):
+        b1 = GAME_TOP < y < GAME_TOP + RESOURCE_ITEM_HEIGHT
+        b2 = GAME_LEFT < x < GAME_RIGHT
+        return b1 and b2
+
+    def click(self, x, y, button: Qt.MouseButton):
+        if not self.check_in(x, y):
+            return
+        
+        name = self.items[x // self.item_width]
+        click = "Left" if button == Qt.LeftButton else "Right"
+        print(f"{click} click in: {name}")
+
+
     def draw(self, painter: QPainter):
-        item_width = GAME_WIDTH // len(self.items)
         flag = Qt.AlignLeft | Qt.AlignVCenter
 
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
 
         for i, item in enumerate(self.items):
-            start_x = item_width * i + GAME_LEFT
+            start_x = self.item_width * i + GAME_LEFT
             r: ResourceItemPanel = getattr(self, item)
-            r.draw(painter, start_x, item_width, flag)
+            r.draw(painter, start_x, self.item_width, flag)
 
 
 
