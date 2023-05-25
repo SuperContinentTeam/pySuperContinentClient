@@ -5,7 +5,7 @@ from gui.game.widgets.resource_panel import ResourcePanel
 
 from utils.settings import TITLE
 from utils.size import WIDTH, HEIGHT
-from utils.reference import image
+
 
 class MainGamePanel(QMainWindow):
     def __init__(self, argumensts, *args, **kwargs):
@@ -30,7 +30,7 @@ class MainGamePanel(QMainWindow):
             self.last_window.show()
 
         return super().closeEvent(a0)
-    
+
     def center(self):
         # 获取屏幕的大小
         screen = QDesktopWidget().screenGeometry()
