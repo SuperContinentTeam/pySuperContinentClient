@@ -4,7 +4,7 @@ from typing import Dict, Tuple
 from PyQt5.QtGui import QPainter
 from PyQt5.QtCore import QRect, Qt
 
-from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT, GAME_BOTTOM, ZONING_AREA
+from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT, GAME_BOTTOM
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
 
@@ -57,6 +57,6 @@ class WorldPanel:
 
         # 点击地块时 触发更新信号让界面局部刷新区划板块
         self.parent.display_block = block
-        self.parent.update(ZONING_AREA)
+        self.parent.update()
 
         print(f"{click} click in {block}. Pos({x}, {y}), BlockWidth: {self.block_width}")
