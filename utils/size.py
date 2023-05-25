@@ -1,3 +1,4 @@
+from PyQt5.QtCore import QRect
 
 DX = 2
 
@@ -28,6 +29,13 @@ ZONING_HEIGHT = WORLD_HEIGHT // 2
 # 区划坐标
 ZONING_TOP = WORLD_TOP + FLITER_HEIGHT
 ZONING_LEFT = WORLD_HEIGHT
+# 局部更新区划板块
+ZONING_AREA = QRect(
+    ZONING_LEFT - 2,
+    ZONING_TOP - 2,
+    ZONING_HEIGHT + 4,
+    ZONING_HEIGHT + 4
+)
 
 # 消息面板的文字高度
 MESSAGE_TEXT_HEIGHT = 16

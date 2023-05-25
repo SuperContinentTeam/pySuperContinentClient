@@ -27,18 +27,20 @@ class MainGamePanel(QMainWindow):
         # 消息板块
         # self.message_box = MessageBoxPanel(self)
         # 世界板块
-        self.world = WorldPanel()
+        self.world = WorldPanel(self)
         # 滤镜板块
         self.fliter_panel = FliterPanel()
         # 区划板块
-        self.zoning_panel = ZoningPanel()
+        self.zoning_panel = ZoningPanel(self.world.blocks.values())
+        # 被显示区划的世界地块
+        self.display_block = None
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
         self.resource_panel.draw(painter)
         self.world.draw(painter)
         self.fliter_panel.draw(painter)
-        self.zoning_panel.draw(painter)
+        self.zoning_panel.draw(painter, self.display_block)
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         pos = a0.pos()

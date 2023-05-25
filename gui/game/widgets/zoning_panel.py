@@ -1,7 +1,7 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Iterable
 
 from PyQt5.QtGui import QPainter
-from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtCore import QRect
 
 from utils.size import ZONING_LEFT, ZONING_TOP, ZONING_HEIGHT
 from utils.colors import BLACK, WHITE
@@ -20,7 +20,6 @@ class ZoningBlock:
         return f"<Zoning: {self.ix}, {self.iy}>"
 
     def draw(self, painter: QPainter, width: int):
-        print(self)
         painter.setBrush(WHITE)
         rect = QRect(
             self.ix * width + ZONING_LEFT,
@@ -33,18 +32,32 @@ class ZoningBlock:
 
 
 class ZoningPanel:
-    def __init__(self, size=3):
-        self.size = 3
-        self.number = size * size
-        self.zoning_width = ZONING_HEIGHT // size
+    rect = QRect(
+        ZONING_LEFT,
+        ZONING_TOP,
+        ZONING_HEIGHT,
+        ZONING_HEIGHT
+    )
 
-        temp_b = Block(0, 0)
-        self.zonings: Dict[Tuple[int, int], ZoningBlock] = {
-            (i, j): ZoningBlock(i, j, temp_b)
-            for i in range(size) for j in range(size)
-        }
+    def __init__(self, blocks: Iterable[Block]):
+        self.zonings: Dict[Tuple[int, int, int, int], ZoningBlock] = dict()
+        self.init_zonings(blocks)
 
-    def draw(self, painter: QPainter):
+    def init_zonings(self, blocks: Iterable[Block]):
+        for block in blocks:
+            for i in range(block.zoning_number):
+                for j in range(block.zoning_number):
+                    k = block.ix, block.iy, i, j
+                    self.zonings[k] = ZoningBlock(i, j, block)
+
+    def draw(self, painter: QPainter, block: Block = None):
         painter.setPen(BLACK)
-        for zoning in self.zonings.values():
-            zoning.draw(painter, self.zoning_width)
+        if block is None:
+            painter.drawRect(self.rect)
+        else:
+            item_width = ZONING_HEIGHT // block.zoning_number
+            for i in range(block.zoning_number):
+                for j in range(block.zoning_number):
+                    k = block.ix, block.iy, i, j
+                    zoning_block = self.zonings[k]
+                    zoning_block.draw(painter, item_width)

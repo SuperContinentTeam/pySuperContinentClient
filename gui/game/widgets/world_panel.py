@@ -1,9 +1,10 @@
+import random
 from typing import Dict, Tuple
 
 from PyQt5.QtGui import QPainter
 from PyQt5.QtCore import QRect, Qt
 
-from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT, GAME_BOTTOM
+from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT, GAME_BOTTOM, ZONING_AREA
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
 
@@ -12,6 +13,7 @@ class Block:
     def __init__(self, c, r):
         self.ix = c
         self.iy = r
+        self.zoning_number = random.randint(3, 6)
 
     def draw(self, painter: QPainter, width: int):
         painter.setBrush(WHITE)
@@ -23,7 +25,8 @@ class Block:
         return f"<Block: {self.ix}, {self.iy}>"
 
 class WorldPanel:
-    def __init__(self, size=10):
+    def __init__(self, parent, size=10):
+        self.parent = parent
         self.size = size
         self.number = size * size
         self.block_width = WORLD_HEIGHT // size
@@ -51,4 +54,9 @@ class WorldPanel:
         col = (x - GAME_LEFT) // self.block_width
         row = (y - WORLD_TOP) // self.block_width
         block = self.blocks[(col, row)]
+
+        # 点击地块时 触发更新信号让界面局部刷新区划板块
+        self.parent.display_block = block
+        self.parent.update(ZONING_AREA)
+
         print(f"{click} click in {block}. Pos({x}, {y}), BlockWidth: {self.block_width}")
