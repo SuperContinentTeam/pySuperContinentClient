@@ -1,8 +1,14 @@
 from functools import lru_cache
 
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 
 from utils.settings import IMAGE_DIR
+
+# 文字左对齐
+FLAG_ALIGN_LEFT = Qt.AlignLeft | Qt.AlignVCenter
+# 文字居中
+FLAG_ALIGN_CENTER = Qt.AlignVCenter | Qt.AlignHCenter
 
 @lru_cache
 def image(name):

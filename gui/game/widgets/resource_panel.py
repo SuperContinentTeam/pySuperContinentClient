@@ -2,7 +2,7 @@ from PyQt5.QtGui import QPainter
 from PyQt5.QtCore import Qt
 
 from utils.size import GAME_WIDTH, RESOURCE_ITEM_HEIGHT, GAME_TOP, GAME_LEFT, DX, GAME_RIGHT
-from utils.reference import format_number, image
+from utils.reference import format_number, image, FLAG_ALIGN_LEFT
 from utils.colors import BLACK, WHITE, RED
 
 
@@ -12,7 +12,7 @@ class ResourceItemPanel:
         self.storage = storage
         self.monthly = monthly
 
-    def draw(self, painter: QPainter, start_x: int, width: int, flag):
+    def draw(self, painter: QPainter, start_x: int, width: int):
         painter.drawRect(
             start_x,
             GAME_TOP,
@@ -36,7 +36,7 @@ class ResourceItemPanel:
             GAME_TOP,
             width - RESOURCE_ITEM_HEIGHT,
             RESOURCE_ITEM_HEIGHT // 2,
-            flag,
+            FLAG_ALIGN_LEFT,
             format_number(self.storage)
         )
 
@@ -45,7 +45,7 @@ class ResourceItemPanel:
             GAME_TOP + RESOURCE_ITEM_HEIGHT // 2,
             width - RESOURCE_ITEM_HEIGHT,
             RESOURCE_ITEM_HEIGHT // 2,
-            flag,
+            FLAG_ALIGN_LEFT,
             format_number(self.monthly, True)
         )
 
@@ -84,15 +84,12 @@ class ResourcePanel:
 
 
     def draw(self, painter: QPainter):
-        flag = Qt.AlignLeft | Qt.AlignVCenter
-
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
 
         for i, item in enumerate(self.items):
-            start_x = self.item_width * i + GAME_LEFT
             r: ResourceItemPanel = getattr(self, item)
-            r.draw(painter, start_x, self.item_width, flag)
+            r.draw(painter, self.item_width * i + GAME_LEFT, self.item_width)
 
 
 

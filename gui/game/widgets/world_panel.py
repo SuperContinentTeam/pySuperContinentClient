@@ -5,6 +5,7 @@ from PyQt5.QtCore import QRect, Qt
 
 from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT, GAME_BOTTOM
 from utils.colors import BLACK, WHITE
+from utils.reference import FLAG_ALIGN_CENTER
 
 
 class Block:
@@ -16,7 +17,7 @@ class Block:
         painter.setBrush(WHITE)
         rect = QRect(self.ix * width + GAME_LEFT, self.iy * width + WORLD_TOP,  width, width)
         painter.drawRect(rect)
-        painter.drawText(rect, Qt.AlignHCenter | Qt.AlignVCenter, f"{self.ix}, {self.iy}")
+        painter.drawText(rect, FLAG_ALIGN_CENTER, f"{self.ix}, {self.iy}")
 
     def __str__(self) -> str:
         return f"<Block: {self.ix}, {self.iy}>"

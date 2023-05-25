@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 from gui.game.widgets.message_panel import MessageBoxPanel
 from gui.game.widgets.resource_panel import ResourcePanel
 from gui.game.widgets.world_panel import WorldPanel
+from gui.game.widgets.fliter_panel import FliterPanel
 
 from utils.settings import TITLE
 from utils.size import WIDTH, HEIGHT
@@ -26,11 +27,14 @@ class MainGamePanel(QMainWindow):
         # self.message_box = MessageBoxPanel(self)
         # 世界板块
         self.world = WorldPanel()
+        # 滤镜板块
+        self.fliter_panel = FliterPanel()
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
         self.resource_panel.draw(painter)
         self.world.draw(painter)
+        self.fliter_panel.draw(painter)
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         pos = a0.pos()
