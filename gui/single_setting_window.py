@@ -1,13 +1,13 @@
 # from PyQt5.QtCore import QTimer
 from pprint import pprint
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QMainWindow, QGridLayout, QPushButton, QLabel, QWidget, QLineEdit,
-    QSlider, QComboBox, QColorDialog
+    QSlider, QComboBox, QColorDialog, QCheckBox
 )
 
 from utils.settings import TITLE
+from utils.colors import BLACK
 
 
 class SingleSettingWindow(QMainWindow):
@@ -25,7 +25,7 @@ class SingleSettingWindow(QMainWindow):
             "aiCount": 0,
             "resourceRatio": 1,
             "empireName": "",
-            "empireColor": None,
+            "empireColor": BLACK,
             "activeAiModel": False,
             "aiModelPath": ""
         }
@@ -65,13 +65,16 @@ class SingleSettingWindow(QMainWindow):
 
         layout.addWidget(QLabel("国家主色"), 4, 0)
         self.btn_empire_color = QPushButton(self)
-        self.btn_empire_color.setStyleSheet("background-color: white; border-radius: 2px")
+        self.btn_empire_color.setStyleSheet(f"background-color: black; border-radius: 1px")
         self.btn_empire_color.clicked.connect(self.click_select_color)
         layout.addWidget(self.btn_empire_color, 4, 1)
 
         layout.addWidget(QLabel("启用AI"), 5, 0)
-        layout.addWidget(QLineEdit(""), 5, 1)
+        self.check_box_active_ai = QCheckBox()
+        self.check_box_active_ai.stateChanged.connect(self.active_ai_mode)
+        layout.addWidget(self.check_box_active_ai, 5, 1)
         layout.addWidget(QLabel("(未启用)"), 5, 2)
+
         layout.addWidget(QLabel("导入AI模型"), 6, 0)
         layout.addWidget(QLineEdit(""), 6, 1)
         layout.addWidget(QPushButton("打开文件", self), 6, 2)
@@ -88,6 +91,10 @@ class SingleSettingWindow(QMainWindow):
         center_widget.setLayout(layout)
         self.setCentralWidget(center_widget)
 
+    def active_ai_mode(self):
+        print(self.check_box_active_ai.isChecked())
+        # self.argumensts["activeAiModel"] = self.active_ai_mode.value()
+
     def select_resource_ratio(self):
         self.argumensts["resourceRatio"] = int(self.combo_box_resource.currentData())
 
@@ -95,7 +102,10 @@ class SingleSettingWindow(QMainWindow):
         self.argumensts["worldSize"] = int(self.combo_box_world_size.currentData())
 
     def click_select_color(self):
-        ...
+        color = QColorDialog.getColor(parent=self)
+        if color.isValid():
+            self.btn_empire_color.setStyleSheet(f"background-color: {color.name()}; border-radius: 1px")
+            self.argumensts["empireColor"] = color
 
     def slider_ai_count_change_value(self):
         value = self.slider_ai_count.value()
@@ -105,7 +115,7 @@ class SingleSettingWindow(QMainWindow):
     def click_game_start(self):
         pprint(self.argumensts)
 
-    def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
+    def closeEvent(self, a0) -> None:
         self.last_window.show()
 
         return super().closeEvent(a0)
