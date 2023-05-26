@@ -1,14 +1,12 @@
-import time
-
-from PyQt5.QtCore import pyqtSignal, pyqtSlot, QObject
-from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
+from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtGui import QPainter, QPaintEvent, QMouseEvent
+from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
 
-from gui.game.widgets.resource_panel import ResourcePanel
-from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.filter_panel import FilterPanel
+from gui.game.widgets.resource_panel import ResourcePanel
+from gui.game.widgets.resource_widget import ResourceWidget
+from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.zoning_panel import ZoningPanel
-
 from utils.settings import TITLE
 from utils.size import WIDTH, HEIGHT
 
@@ -32,7 +30,8 @@ class MainGamePanel(QMainWindow):
         self.center()
 
         # 资源板块
-        self.resource_panel = ResourcePanel()
+        # self.resource_panel = ResourcePanel()
+        self.resource_widget = ResourceWidget(self)
         # 消息板块
         # self.message_box = MessageBoxPanel(self)
         # 世界板块
@@ -47,7 +46,7 @@ class MainGamePanel(QMainWindow):
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
-        self.resource_panel.draw(painter)
+        # self.resource_panel.draw(painter)
         self.world.draw(painter)
         self.filter_panel.draw(painter)
         self.zoning_panel.draw(painter, self.display_block)
@@ -57,7 +56,7 @@ class MainGamePanel(QMainWindow):
         button = a0.button()
         x, y = pos.x(), pos.y()
 
-        self.resource_panel.click(x, y, button)
+        # self.resource_panel.click(x, y, button)
         self.world.click(x, y, button)
 
     def closeEvent(self, a0) -> None:
