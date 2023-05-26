@@ -3,7 +3,6 @@ from PyQt5.QtGui import QPainter, QPaintEvent, QMouseEvent
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
 
 from gui.game.widgets.filter_panel import FilterPanel
-from gui.game.widgets.resource_panel import ResourcePanel
 from gui.game.widgets.resource_widget import ResourceWidget
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.zoning_panel import ZoningPanel
@@ -30,7 +29,6 @@ class MainGamePanel(QMainWindow):
         self.center()
 
         # 资源板块
-        # self.resource_panel = ResourcePanel()
         self.resource_widget = ResourceWidget(self)
         # 消息板块
         # self.message_box = MessageBoxPanel(self)

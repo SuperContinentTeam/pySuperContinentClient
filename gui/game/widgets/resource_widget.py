@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPainter, QMouseEvent
+from PyQt5.QtCore import Qt
 
 from utils.colors import BLACK, WHITE, RED
 from utils.reference import image, FLAG_ALIGN_LEFT, format_number
@@ -33,7 +34,7 @@ class ResourceWidget(QWidget):
                 setattr(getattr(self, item), "monthly", arg["monthly"])
 
     def paintEvent(self, a0):
-        painter = QPainter()
+        painter = QPainter(self)
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
 
@@ -79,3 +80,10 @@ class ResourceWidget(QWidget):
 
             if r.monthly < 0:
                 painter.setPen(BLACK)
+
+    def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
+        pos = a0.pos()
+        x, y = pos.x(), pos.y()
+        name = self.items[x // self.item_width]
+        click = "Left" if a0.button() == Qt.LeftButton else "Right"
+        print(f"{click} click in: {name}")
