@@ -1,9 +1,15 @@
+from PyQt5.QtCore import QRect, Qt
 from PyQt5.QtGui import QPainter
-from PyQt5.QtCore import QRect
 
-from utils.size import WORLD_TOP, FILTER_HEIGHT, FILTER_WIDTH, FILTER_LEFT
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
+from utils.size import WORLD_TOP, FILTER_HEIGHT, FILTER_WIDTH, FILTER_LEFT
+
+
+def check_in(x, y):
+    b1 = FILTER_LEFT < x < FILTER_LEFT + FILTER_WIDTH
+    b2 = WORLD_TOP < y < WORLD_TOP + FILTER_HEIGHT
+    return b1 and b2
 
 
 class FilterItemPanel:
@@ -22,10 +28,18 @@ class FilterPanel:
     def __init__(self):
         self.filters = tuple(FilterItemPanel(i) for i in self.items)
         self.item_width = FILTER_WIDTH // len(self.items)
-    
+
+    def click(self, x, y, button: Qt.MouseButton):
+        if not check_in(x, y):
+            return
+
+        f: FilterItemPanel = self.filters[x // self.item_width]
+        click = "Left" if button == Qt.LeftButton else "Right"
+        print(f"{click} click in: {f.name}")
+
     def draw(self, painter: QPainter):
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
-        
+
         for i, f in enumerate(self.filters):
             f.draw(painter, self.item_width * i + FILTER_LEFT, self.item_width)

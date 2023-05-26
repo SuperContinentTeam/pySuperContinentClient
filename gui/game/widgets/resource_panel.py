@@ -7,7 +7,7 @@ from utils.colors import BLACK, WHITE, RED
 
 
 class ResourceItemPanel:
-    def __init__(self, name, storage=999999999999, monthly=99999):
+    def __init__(self, name, storage=0, monthly=0):
         self.name = name
         self.storage = storage
         self.monthly = monthly

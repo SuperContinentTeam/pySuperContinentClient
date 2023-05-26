@@ -17,7 +17,7 @@ def start_gui():
                      'empireName': '',
                      'resourceRatio': 1,
                      'worldSize': 10}
-        start_window = MainGamePanel(argumensts=arguments)
+        start_window = MainGamePanel(arguments=arguments)
         start_window.show()
         sys.exit(app.exec_())
     except Exception as e:

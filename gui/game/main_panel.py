@@ -1,5 +1,9 @@
+import time
+
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, QObject
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
 from PyQt5.QtGui import QPainter, QPaintEvent, QMouseEvent
+
 from gui.game.widgets.resource_panel import ResourcePanel
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.filter_panel import FilterPanel
@@ -9,12 +13,19 @@ from utils.settings import TITLE
 from utils.size import WIDTH, HEIGHT
 
 
+class Signal(QObject):
+    signal_update_event = pyqtSignal()
+
+
 class MainGamePanel(QMainWindow):
+    signal = Signal()
+
     def __init__(self, arguments, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.last_window = self.parent()
         # 初始参数
         self.arguments = arguments
+        # self.game_state = GameState(10)
 
         self.setWindowTitle(TITLE)
         self.resize(WIDTH, HEIGHT)
@@ -25,7 +36,8 @@ class MainGamePanel(QMainWindow):
         # 消息板块
         # self.message_box = MessageBoxPanel(self)
         # 世界板块
-        self.world = WorldPanel(self)
+        self.world = WorldPanel()
+        self.world.signal.update_zoning_panel.connect(self.update_zoning_panel)
         # 滤镜板块
         self.filter_panel = FilterPanel()
         # 区划板块
@@ -61,3 +73,8 @@ class MainGamePanel(QMainWindow):
         y = (screen.height() - HEIGHT) // 2
 
         self.move(x, y)
+
+    # 更新区划板块
+    def update_zoning_panel(self, pos):
+        self.display_block = self.world.blocks[pos]
+        self.update()
