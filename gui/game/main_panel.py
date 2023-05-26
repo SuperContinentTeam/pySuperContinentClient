@@ -1,10 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
 from PyQt5.QtGui import QPainter, QPaintEvent, QMouseEvent
-from PyQt5.QtCore import Qt
-from gui.game.widgets.message_panel import MessageBoxPanel
 from gui.game.widgets.resource_panel import ResourcePanel
 from gui.game.widgets.world_panel import WorldPanel
-from gui.game.widgets.fliter_panel import FliterPanel
+from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.zoning_panel import ZoningPanel
 
 from utils.settings import TITLE
@@ -12,11 +10,11 @@ from utils.size import WIDTH, HEIGHT
 
 
 class MainGamePanel(QMainWindow):
-    def __init__(self, argumensts, *args, **kwargs):
+    def __init__(self, arguments, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.last_window = self.parent()
         # 初始参数
-        self.arguments = argumensts
+        self.arguments = arguments
 
         self.setWindowTitle(TITLE)
         self.resize(WIDTH, HEIGHT)
@@ -29,7 +27,7 @@ class MainGamePanel(QMainWindow):
         # 世界板块
         self.world = WorldPanel(self)
         # 滤镜板块
-        self.fliter_panel = FliterPanel()
+        self.filter_panel = FilterPanel()
         # 区划板块
         self.zoning_panel = ZoningPanel(self.world.blocks.values())
         # 被显示区划的世界地块
@@ -39,20 +37,20 @@ class MainGamePanel(QMainWindow):
         painter = QPainter(self)
         self.resource_panel.draw(painter)
         self.world.draw(painter)
-        self.fliter_panel.draw(painter)
+        self.filter_panel.draw(painter)
         self.zoning_panel.draw(painter, self.display_block)
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         pos = a0.pos()
         button = a0.button()
         x, y = pos.x(), pos.y()
-        
+
         self.resource_panel.click(x, y, button)
         self.world.click(x, y, button)
 
     def closeEvent(self, a0) -> None:
         if self.last_window:
-            self.last_window.show()
+            self.last_window.show()  # type: ignore
 
         return super().closeEvent(a0)
 
@@ -63,6 +61,3 @@ class MainGamePanel(QMainWindow):
         y = (screen.height() - HEIGHT) // 2
 
         self.move(x, y)
-
-
-

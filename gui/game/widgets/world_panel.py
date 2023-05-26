@@ -24,6 +24,13 @@ class Block:
     def __str__(self) -> str:
         return f"<Block: {self.ix}, {self.iy}>"
 
+
+def check_in(x, y):
+    b1 = GAME_LEFT < x < GAME_LEFT + WORLD_HEIGHT
+    b2 = WORLD_TOP < y < GAME_BOTTOM
+    return b1 and b2
+
+
 class WorldPanel:
     def __init__(self, parent, size=10):
         self.parent = parent
@@ -41,13 +48,8 @@ class WorldPanel:
         for block in self.blocks.values():
             block.draw(painter, self.block_width)
 
-    def check_in(self, x, y):
-        b1 = GAME_LEFT < x < GAME_LEFT + WORLD_HEIGHT
-        b2 = WORLD_TOP < y < GAME_BOTTOM
-        return b1 and b2
-
     def click(self, x, y, button: Qt.MouseButton):
-        if not self.check_in(x, y):
+        if not check_in(x, y):
             return
 
         click = "Left" if button == Qt.LeftButton else "Right"

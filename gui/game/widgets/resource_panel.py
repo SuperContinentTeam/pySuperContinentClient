@@ -53,6 +53,12 @@ class ResourceItemPanel:
             painter.setPen(BLACK)
 
 
+def check_in(x, y):
+    b1 = GAME_TOP < y < GAME_TOP + RESOURCE_ITEM_HEIGHT
+    b2 = GAME_LEFT < x < GAME_RIGHT
+    return b1 and b2
+
+
 class ResourcePanel:
     items = ("energy", "mineral", "food", "customer",
              "alloy", "physics", "engineer", "beyond")
@@ -69,19 +75,13 @@ class ResourcePanel:
                 setattr(getattr(self, item), "storage", arg["storage"])
                 setattr(getattr(self, item), "monthly", arg["monthly"])
 
-    def check_in(self, x, y):
-        b1 = GAME_TOP < y < GAME_TOP + RESOURCE_ITEM_HEIGHT
-        b2 = GAME_LEFT < x < GAME_RIGHT
-        return b1 and b2
-
     def click(self, x, y, button: Qt.MouseButton):
-        if not self.check_in(x, y):
+        if not check_in(x, y):
             return
-        
+
         name = self.items[x // self.item_width]
         click = "Left" if button == Qt.LeftButton else "Right"
         print(f"{click} click in: {name}")
-
 
     def draw(self, painter: QPainter):
         painter.setPen(BLACK)
@@ -90,7 +90,3 @@ class ResourcePanel:
         for i, item in enumerate(self.items):
             r: ResourceItemPanel = getattr(self, item)
             r.draw(painter, self.item_width * i + GAME_LEFT, self.item_width)
-
-
-
-

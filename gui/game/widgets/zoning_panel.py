@@ -40,17 +40,17 @@ class ZoningPanel:
     )
 
     def __init__(self, blocks: Iterable[Block]):
-        self.zonings: Dict[Tuple[int, int, int, int], ZoningBlock] = dict()
-        self.init_zonings(blocks)
+        self.zoning_map: Dict[Tuple[int, int, int, int], ZoningBlock] = dict()
+        self.init_zoning_map(blocks)
 
-    def init_zonings(self, blocks: Iterable[Block]):
+    def init_zoning_map(self, blocks: Iterable[Block]):
         for block in blocks:
             for i in range(block.zoning_number):
                 for j in range(block.zoning_number):
                     k = block.ix, block.iy, i, j
-                    self.zonings[k] = ZoningBlock(i, j, block)
+                    self.zoning_map[k] = ZoningBlock(i, j, block)
 
-    def draw(self, painter: QPainter, block: Block = None):
+    def draw(self, painter: QPainter, block: Block | None = None):
         painter.setPen(BLACK)
         if block is None:
             painter.drawRect(self.rect)
@@ -59,5 +59,5 @@ class ZoningPanel:
             for i in range(block.zoning_number):
                 for j in range(block.zoning_number):
                     k = block.ix, block.iy, i, j
-                    zoning_block = self.zonings[k]
+                    zoning_block = self.zoning_map[k]
                     zoning_block.draw(painter, item_width)

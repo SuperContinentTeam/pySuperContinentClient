@@ -13,13 +13,13 @@ class StartWindow(QMainWindow):
         v_box = QVBoxLayout()
 
         btn_single = QPushButton("单人模式", self)
-        btn_single.clicked.connect(self.open_single_window)
+        btn_single.clicked.connect(self.open_single_window)  # type: ignore
 
         btn_multi = QPushButton("多人模式", self)
         btn_setting = QPushButton("游戏设置", self)
 
         btn_quit = QPushButton("退出游戏", self)
-        btn_quit.clicked.connect(QApplication.quit)
+        btn_quit.clicked.connect(QApplication.quit)  # type: ignore
 
         v_box.addWidget(btn_single)
         v_box.addWidget(btn_multi)
@@ -34,6 +34,3 @@ class StartWindow(QMainWindow):
         self.hide()
         next_window = SingleSettingWindow(self)
         next_window.show()
-
-
-

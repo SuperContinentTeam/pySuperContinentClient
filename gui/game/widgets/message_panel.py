@@ -1,9 +1,7 @@
-from PyQt5.QtGui import QPainter
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QPlainTextEdit
 
-from utils.size import GAME_WIDTH, MESSAGE_BOX_HEIGHT, WORLD_HEIGHT, GAME_LEFT, GAME_BOTTOM
-from utils.colors import BLACK, WHITE, RED
+from utils.size import MESSAGE_BOX_HEIGHT, WORLD_HEIGHT, GAME_LEFT, GAME_BOTTOM
+
 
 class MessageBoxPanel:
     def __init__(self, parent):

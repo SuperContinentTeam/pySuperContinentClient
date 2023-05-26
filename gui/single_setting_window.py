@@ -1,14 +1,13 @@
 # from PyQt5.QtCore import QTimer
-from pprint import pprint
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QMainWindow, QGridLayout, QPushButton, QLabel, QWidget, QLineEdit,
     QSlider, QComboBox, QColorDialog, QCheckBox
 )
-from gui.game.main_panel import MainGamePanel
 
-from utils.settings import TITLE
+from gui.game.main_panel import MainGamePanel
 from utils.colors import BLACK
+from utils.settings import TITLE
 
 
 class SingleSettingWindow(QMainWindow):
@@ -21,7 +20,7 @@ class SingleSettingWindow(QMainWindow):
         self.setWindowTitle(TITLE)
         self.setGeometry(pos.x(), pos.y(), 400, 300)
 
-        self.argumensts = {
+        self.arguments = {
             "worldSize": 10,
             "aiCount": 0,
             "resourceRatio": 1,
@@ -39,14 +38,14 @@ class SingleSettingWindow(QMainWindow):
         self.combo_box_world_size.addItem("20x20", "20")
         self.combo_box_world_size.addItem("30x30", "30")
         self.combo_box_world_size.setCurrentIndex(0)
-        self.combo_box_world_size.activated.connect(self.select_world_size_change_value)
+        self.combo_box_world_size.activated.connect(self.select_world_size_change_value)  # type: ignore
         layout.addWidget(self.combo_box_world_size, 0, 1)
 
         layout.addWidget(QLabel("AI数量"), 1, 0)
         self.slider_ai_count = QSlider(Qt.Horizontal)
         self.slider_ai_count.setMinimum(0)
         self.slider_ai_count.setMaximum(20)
-        self.slider_ai_count.valueChanged.connect(self.slider_ai_count_change_value)
+        self.slider_ai_count.valueChanged.connect(self.slider_ai_count_change_value)  # type: ignore
         layout.addWidget(self.slider_ai_count, 1, 1)
         self.label_ai_count = QLabel(f"{self.slider_ai_count.value()} (该功能未启用)")
         layout.addWidget(self.label_ai_count, 1, 2)
@@ -56,7 +55,7 @@ class SingleSettingWindow(QMainWindow):
         self.combo_box_resource.addItem("默认", "1")
         self.combo_box_resource.addItem("富饶", "2")
         self.combo_box_resource.setCurrentIndex(1)
-        self.combo_box_resource.activated.connect(self.select_resource_ratio)
+        self.combo_box_resource.activated.connect(self.select_resource_ratio)  # type: ignore
         layout.addWidget(QLabel("资源比例"), 2, 0)
         layout.addWidget(self.combo_box_resource, 2, 1)
 
@@ -67,12 +66,12 @@ class SingleSettingWindow(QMainWindow):
         layout.addWidget(QLabel("国家主色"), 4, 0)
         self.btn_empire_color = QPushButton(self)
         self.btn_empire_color.setStyleSheet(f"background-color: black; border-radius: 1px")
-        self.btn_empire_color.clicked.connect(self.click_select_color)
+        self.btn_empire_color.clicked.connect(self.click_select_color)  # type: ignore
         layout.addWidget(self.btn_empire_color, 4, 1)
 
         layout.addWidget(QLabel("启用AI"), 5, 0)
         self.check_box_active_ai = QCheckBox()
-        self.check_box_active_ai.stateChanged.connect(self.active_ai_mode)
+        self.check_box_active_ai.stateChanged.connect(self.active_ai_mode)  # type: ignore
         layout.addWidget(self.check_box_active_ai, 5, 1)
         layout.addWidget(QLabel("(该功能未启用)"), 5, 2)
 
@@ -81,11 +80,11 @@ class SingleSettingWindow(QMainWindow):
         layout.addWidget(QPushButton("打开文件", self), 6, 2)
 
         btn_back = QPushButton("返回", self)
-        btn_back.clicked.connect(self.close_window)
+        btn_back.clicked.connect(self.close_window)  # type: ignore
         layout.addWidget(btn_back, 7, 2)
 
         btn_start = QPushButton("开始游戏", self)
-        btn_start.clicked.connect(self.click_game_start)
+        btn_start.clicked.connect(self.click_game_start)  # type: ignore
         layout.addWidget(btn_start, 8, 2)
 
         center_widget = QWidget(self)
@@ -94,38 +93,34 @@ class SingleSettingWindow(QMainWindow):
 
     def active_ai_mode(self):
         print(self.check_box_active_ai.isChecked())
-        # self.argumensts["activeAiModel"] = self.active_ai_mode.value()
 
     def select_resource_ratio(self):
-        self.argumensts["resourceRatio"] = int(self.combo_box_resource.currentData())
+        self.arguments["resourceRatio"] = int(self.combo_box_resource.currentData())
 
     def select_world_size_change_value(self):
-        self.argumensts["worldSize"] = int(self.combo_box_world_size.currentData())
+        self.arguments["worldSize"] = int(self.combo_box_world_size.currentData())
 
     def click_select_color(self):
         color = QColorDialog.getColor(parent=self)
         if color.isValid():
             self.btn_empire_color.setStyleSheet(f"background-color: {color.name()}; border-radius: 1px")
-            self.argumensts["empireColor"] = color
+            self.arguments["empireColor"] = color
 
     def slider_ai_count_change_value(self):
         value = self.slider_ai_count.value()
         self.label_ai_count.setText(f"{value} (该功能未启用)")
-        self.argumensts["aiCount"] = value
+        self.arguments["aiCount"] = value
 
     def click_game_start(self):
         self.close()
         self.last_window.close()
-        temp = MainGamePanel(parent=self.last_window, argumensts=self.argumensts)
+        temp = MainGamePanel(parent=self.last_window, arguments=self.arguments)
         temp.show()
 
     def closeEvent(self, a0) -> None:
         self.last_window.show()
 
         return super().closeEvent(a0)
-    
+
     def close_window(self):
         self.close()
-
-
-
