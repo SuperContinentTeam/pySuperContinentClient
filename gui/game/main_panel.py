@@ -2,14 +2,13 @@ from PyQt6.QtCore import pyqtSignal, QObject
 from PyQt6.QtGui import QPainter, QPaintEvent, QMouseEvent, QGuiApplication
 from PyQt6.QtWidgets import QMainWindow
 
+from gui.game.game_state.state import GameState
 from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.resource_widget import ResourceWidget
 from gui.game.widgets.world_panel import WorldPanel
-from gui.game.widgets.zoning_panel import ZoningPanel
-from gui.game.game_state.state import GameState
-
+from gui.game.widgets.zoning_widget import ZoningPanel
 from utils.settings import TITLE
-from utils.size import WIDTH, HEIGHT
+from utils.size import WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM
 
 
 class Signal(QObject):
@@ -36,27 +35,28 @@ class MainGamePanel(QMainWindow):
         # self.message_box = MessageBoxPanel(self)
         # 世界板块
         self.world = WorldPanel()
-        self.world.signal.update_zoning_panel.connect(self.update_zoning_panel)
         # 滤镜板块
         self.filter_panel = FilterPanel()
         # 区划板块
-        self.zoning_panel = ZoningPanel(self.world.blocks.values())
-        # 被显示区划的世界地块
-        self.display_block = None
+        self.zoning_panel = ZoningPanel()
+        print(self)
+        self.world.signal.update_zoning_panel.connect(self.update_zoning_panel)
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
-        # self.resource_panel.draw(painter)
         self.world.draw(painter)
         self.filter_panel.draw(painter)
-        self.zoning_panel.draw(painter, self.display_block)
+        self.zoning_panel.draw(painter)
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         pos = a0.pos()
         button = a0.button()
         x, y = pos.x(), pos.y()
 
-        # self.resource_panel.click(x, y, button)
+        #  检查区划板块
+        if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:
+            self.zoning_panel.click(x - ZONING_LEFT, y - ZONING_TOP, button)
+
         self.world.click(x, y, button)
 
     def closeEvent(self, a0) -> None:
@@ -75,5 +75,5 @@ class MainGamePanel(QMainWindow):
 
     # 更新区划板块
     def update_zoning_panel(self, pos):
-        self.display_block = self.world.blocks[pos]
+        self.zoning_panel.display_block = self.world.blocks[pos]
         self.update()

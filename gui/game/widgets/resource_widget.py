@@ -25,7 +25,7 @@ class ResourceWidget(QWidget):
         for item in self.items:
             setattr(self, item, ResourceItem(item))
 
-        self.setGeometry(GAME_TOP, GAME_LEFT, GAME_WIDTH, RESOURCE_ITEM_HEIGHT)
+        self.setGeometry(GAME_LEFT, GAME_TOP, GAME_WIDTH, RESOURCE_ITEM_HEIGHT)
 
     def init(self, arguments: dict):
         for item in self.items:
