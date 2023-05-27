@@ -6,6 +6,8 @@ from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.resource_widget import ResourceWidget
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.zoning_panel import ZoningPanel
+from gui.game.game_state.state import GameState
+
 from utils.settings import TITLE
 from utils.size import WIDTH, HEIGHT
 
@@ -22,7 +24,7 @@ class MainGamePanel(QMainWindow):
         self.last_window = self.parent()
         # 初始参数
         self.arguments = arguments
-        # self.game_state = GameState(10)
+        self.game_state = GameState(10)
 
         self.setWindowTitle(TITLE)
         self.resize(WIDTH, HEIGHT)
