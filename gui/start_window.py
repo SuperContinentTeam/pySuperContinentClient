@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QApplication
+from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QApplication
 from utils.settings import TITLE
 
 from gui.single_setting_window import SingleSettingWindow

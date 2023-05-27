@@ -1,4 +1,1 @@
-pyqt5
-pyqt5-stubs
-
-
+pyqt6

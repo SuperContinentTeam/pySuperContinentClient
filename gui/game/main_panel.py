@@ -1,6 +1,6 @@
-from PyQt5.QtCore import pyqtSignal, QObject
-from PyQt5.QtGui import QPainter, QPaintEvent, QMouseEvent
-from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
+from PyQt6.QtCore import pyqtSignal, QObject
+from PyQt6.QtGui import QPainter, QPaintEvent, QMouseEvent, QGuiApplication
+from PyQt6.QtWidgets import QMainWindow
 
 from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.resource_widget import ResourceWidget
@@ -28,7 +28,7 @@ class MainGamePanel(QMainWindow):
 
         self.setWindowTitle(TITLE)
         self.resize(WIDTH, HEIGHT)
-        self.center()
+        self.move_center()
 
         # 资源板块
         self.resource_widget = ResourceWidget(self)
@@ -65,8 +65,8 @@ class MainGamePanel(QMainWindow):
 
         return super().closeEvent(a0)
 
-    def center(self):
-        screen = QDesktopWidget().screenGeometry()
+    def move_center(self):
+        screen = QGuiApplication.primaryScreen().size()
 
         x = (screen.width() - WIDTH) // 2
         y = (screen.height() - HEIGHT) // 2

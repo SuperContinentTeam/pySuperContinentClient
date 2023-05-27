@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QPainter, QMouseEvent
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtGui import QPainter, QMouseEvent
+from PyQt6.QtCore import Qt
 
 from utils.colors import BLACK, WHITE, RED
 from utils.reference import image, FLAG_ALIGN_LEFT, format_number
@@ -85,5 +85,5 @@ class ResourceWidget(QWidget):
         pos = a0.pos()
         x, y = pos.x(), pos.y()
         name = self.items[x // self.item_width]
-        click = "Left" if a0.button() == Qt.LeftButton else "Right"
+        click = "Left" if a0.button() == Qt.MouseButton.LeftButton else "Right"
         print(f"{click} click in: {name}")

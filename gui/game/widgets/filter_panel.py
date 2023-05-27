@@ -1,5 +1,5 @@
-from PyQt5.QtCore import QRect, Qt
-from PyQt5.QtGui import QPainter
+from PyQt6.QtCore import QRect, Qt
+from PyQt6.QtGui import QPainter
 
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
@@ -34,7 +34,7 @@ class FilterPanel:
             return
 
         f: FilterItemPanel = self.filters[x // self.item_width]
-        click = "Left" if button == Qt.LeftButton else "Right"
+        click = "Left" if button == Qt.MouseButton.RightButton else "Right"
         print(f"{click} click in: {f.name}")
 
     def draw(self, painter: QPainter):

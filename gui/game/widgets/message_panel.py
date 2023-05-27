@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QPlainTextEdit
+from PyQt6.QtWidgets import QPlainTextEdit
 
 from utils.size import MESSAGE_BOX_HEIGHT, WORLD_HEIGHT, GAME_LEFT, GAME_BOTTOM
 

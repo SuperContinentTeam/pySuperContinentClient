@@ -1,14 +1,14 @@
 from functools import lru_cache
 
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtCore import Qt
 
 from utils.settings import IMAGE_DIR
 
 # 文字左对齐
-FLAG_ALIGN_LEFT = Qt.AlignLeft | Qt.AlignVCenter
+FLAG_ALIGN_LEFT = Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
 # 文字居中
-FLAG_ALIGN_CENTER = Qt.AlignVCenter | Qt.AlignHCenter
+FLAG_ALIGN_CENTER = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
 
 
 @lru_cache

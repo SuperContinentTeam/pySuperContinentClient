@@ -1,7 +1,7 @@
 from typing import Dict, Tuple, Iterable
 
-from PyQt5.QtGui import QPainter
-from PyQt5.QtCore import QRect
+from PyQt6.QtGui import QPainter
+from PyQt6.QtCore import QRect
 
 from utils.size import ZONING_LEFT, ZONING_TOP, ZONING_HEIGHT
 from utils.colors import BLACK, WHITE

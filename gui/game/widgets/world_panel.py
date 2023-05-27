@@ -1,7 +1,7 @@
 from typing import Dict, Tuple
 
-from PyQt5.QtCore import QRect, Qt, pyqtSignal, QObject
-from PyQt5.QtGui import QPainter
+from PyQt6.QtCore import QRect, Qt, pyqtSignal, QObject
+from PyQt6.QtGui import QPainter
 
 from gui.game.game_state.block import Block
 from utils.colors import BLACK, WHITE
@@ -49,7 +49,7 @@ class WorldPanel:
         if not check_in(x, y):
             return
 
-        click = "Left" if button == Qt.LeftButton else "Right"
+        click = "Left" if button == Qt.MouseButton.LeftButton else "Right"
         col = (x - GAME_LEFT) // self.block_width
         row = (y - WORLD_TOP) // self.block_width
 

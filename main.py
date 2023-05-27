@@ -1,7 +1,7 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QColor
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtGui import QColor
 # from gui.start_window import StartWindow
 from gui.game.main_panel import MainGamePanel
 
@@ -19,7 +19,7 @@ def start_gui():
                      'worldSize': 10}
         start_window = MainGamePanel(arguments=arguments)
         start_window.show()
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
     except Exception as e:
         print(e)
 

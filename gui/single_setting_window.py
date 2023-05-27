@@ -1,6 +1,6 @@
 # from PyQt5.QtCore import QTimer
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QMainWindow, QGridLayout, QPushButton, QLabel, QWidget, QLineEdit,
     QSlider, QComboBox, QColorDialog, QCheckBox
 )
