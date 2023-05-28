@@ -1,18 +1,32 @@
 from PyQt6.QtCore import pyqtSignal, QObject
 from PyQt6.QtGui import QPainter, QPaintEvent, QMouseEvent, QGuiApplication
-from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtWidgets import QMainWindow, QListView
 
 from gui.game.game_state.state import GameState
 from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.resource_widget import ResourcePanel
+from gui.game.widgets.schedule_panel import SchedulePanel
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.zoning_widget import ZoningPanel
 from utils.settings import TITLE
 from utils.size import (
     WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM, RESOURCE_LEFT, RESOURCE_RIGHT, RESOURCE_TOP,
     RESOURCE_BOTTOM, WORLD_LEFT, WORLD_RIGHT, WORLD_TOP, WORLD_BOTTOM, FILTER_LEFT, FILTER_RIGHT, FILTER_TOP,
-    FILTER_BOTTOM
+    FILTER_BOTTOM, SCHEDULE_LEFT, SCHEDULE_TOP, SCHEDULE_WIDTH, SCHEDULE_HEIGHT
 )
+
+
+def build_schedule_panel(parent):
+    widget = QListView(parent)
+    print(SCHEDULE_LEFT + SCHEDULE_WIDTH)
+    print(WORLD_RIGHT)
+    widget.setGeometry(
+        SCHEDULE_LEFT,
+        SCHEDULE_TOP,
+        SCHEDULE_WIDTH,
+        SCHEDULE_HEIGHT
+    )
+    return widget
 
 
 class Signal(QObject):
@@ -35,15 +49,19 @@ class MainGamePanel(QMainWindow):
 
         # 资源板块
         self.resource_panel = ResourcePanel()
-        # 消息板块
-        # self.message_box = MessageBoxPanel(self)
         # 世界板块
         self.world = WorldPanel()
         # 滤镜板块
         self.filter_panel = FilterPanel()
         # 区划板块
         self.zoning_panel = ZoningPanel()
+        # 进度板块
+        self.schedule_panel = SchedulePanel(self)
 
+        # 初始化信号连接
+        self.init_signal()
+
+    def init_signal(self):
         self.world.signal.update_zoning_panel.connect(self.update_zoning_panel)
 
     def paintEvent(self, a0: QPaintEvent) -> None:
