@@ -7,7 +7,7 @@ from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.resource_widget import ResourcePanel
 from gui.game.widgets.schedule_panel import SchedulePanel
 from gui.game.widgets.world_panel import WorldPanel
-from gui.game.widgets.zoning_widget import ZoningPanel
+from gui.game.widgets.zoning_panel import ZoningPanel
 from utils.settings import TITLE
 from utils.size import (
     WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM, RESOURCE_LEFT, RESOURCE_RIGHT, RESOURCE_TOP,
