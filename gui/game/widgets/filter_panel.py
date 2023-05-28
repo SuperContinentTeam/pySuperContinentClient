@@ -16,11 +16,6 @@ class FilterItemPanel:
     def __init__(self, name):
         self.name = name
 
-    def draw(self, painter: QPainter, start_x: int, width: int):
-        rect = QRect(start_x, WORLD_TOP, width, FILTER_HEIGHT)
-        painter.drawRect(rect)
-        painter.drawText(rect, FLAG_ALIGN_CENTER, self.name)
-
 
 class FilterPanel:
     items = ("探索滤镜", "领土滤镜")
@@ -29,12 +24,9 @@ class FilterPanel:
         self.filters = tuple(FilterItemPanel(i) for i in self.items)
         self.item_width = FILTER_WIDTH // len(self.items)
 
-    def click(self, x, y, button: Qt.MouseButton):
-        if not check_in(x, y):
-            return
-
+    def click(self, x, button: Qt.MouseButton):
         f: FilterItemPanel = self.filters[x // self.item_width]
-        click = "Left" if button == Qt.MouseButton.RightButton else "Right"
+        click = "Left" if button == Qt.MouseButton.LeftButton else "Right"
         print(f"{click} click in: {f.name}")
 
     def draw(self, painter: QPainter):
@@ -42,4 +34,6 @@ class FilterPanel:
         painter.setBrush(WHITE)
 
         for i, f in enumerate(self.filters):
-            f.draw(painter, self.item_width * i + FILTER_LEFT, self.item_width)
+            rect = QRect(self.item_width * i + FILTER_LEFT, WORLD_TOP, self.item_width, FILTER_HEIGHT)
+            painter.drawRect(rect)
+            painter.drawText(rect, FLAG_ALIGN_CENTER, f.name)

@@ -10,7 +10,8 @@ from gui.game.widgets.zoning_widget import ZoningPanel
 from utils.settings import TITLE
 from utils.size import (
     WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM, RESOURCE_LEFT, RESOURCE_RIGHT, RESOURCE_TOP,
-    RESOURCE_BOTTOM
+    RESOURCE_BOTTOM, WORLD_LEFT, WORLD_RIGHT, WORLD_TOP, WORLD_BOTTOM, FILTER_LEFT, FILTER_RIGHT, FILTER_TOP,
+    FILTER_BOTTOM
 )
 
 
@@ -65,7 +66,13 @@ class MainGamePanel(QMainWindow):
         if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:
             self.zoning_panel.click(x - ZONING_LEFT, y - ZONING_TOP, button)
 
-        self.world.click(x, y, button)
+        # 检查世界板块
+        if WORLD_LEFT < x < WORLD_RIGHT and WORLD_TOP < y < WORLD_BOTTOM:
+            self.world.click(x - WORLD_LEFT, y - WORLD_TOP, button)
+
+        # 检查滤镜板块
+        if FILTER_LEFT < x < FILTER_RIGHT and FILTER_TOP < y < FILTER_BOTTOM:
+            self.filter_panel.click(x - FILTER_LEFT, button)
 
     def closeEvent(self, a0) -> None:
         if self.last_window:
