@@ -4,11 +4,14 @@ from PyQt6.QtWidgets import QMainWindow
 
 from gui.game.game_state.state import GameState
 from gui.game.widgets.filter_panel import FilterPanel
-from gui.game.widgets.resource_widget import ResourceWidget
+from gui.game.widgets.resource_widget import ResourcePanel
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.zoning_widget import ZoningPanel
 from utils.settings import TITLE
-from utils.size import WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM
+from utils.size import (
+    WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM, RESOURCE_LEFT, RESOURCE_RIGHT, RESOURCE_TOP,
+    RESOURCE_BOTTOM
+)
 
 
 class Signal(QObject):
@@ -30,7 +33,7 @@ class MainGamePanel(QMainWindow):
         self.move_center()
 
         # 资源板块
-        self.resource_widget = ResourceWidget(self)
+        self.resource_panel = ResourcePanel()
         # 消息板块
         # self.message_box = MessageBoxPanel(self)
         # 世界板块
@@ -39,11 +42,12 @@ class MainGamePanel(QMainWindow):
         self.filter_panel = FilterPanel()
         # 区划板块
         self.zoning_panel = ZoningPanel()
-        print(self)
+
         self.world.signal.update_zoning_panel.connect(self.update_zoning_panel)
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
+        self.resource_panel.draw(painter)
         self.world.draw(painter)
         self.filter_panel.draw(painter)
         self.zoning_panel.draw(painter)
@@ -52,6 +56,10 @@ class MainGamePanel(QMainWindow):
         pos = a0.pos()
         button = a0.button()
         x, y = pos.x(), pos.y()
+
+        # 检查资源板块
+        if RESOURCE_LEFT < x < RESOURCE_RIGHT and RESOURCE_TOP < y < RESOURCE_BOTTOM:
+            self.resource_panel.click(x - RESOURCE_LEFT, button)
 
         #  检查区划板块
         if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:

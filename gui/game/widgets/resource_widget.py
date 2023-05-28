@@ -1,10 +1,10 @@
-from PyQt6.QtWidgets import QWidget
-from PyQt6.QtGui import QPainter, QMouseEvent
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPainter
+from PyQt6.QtWidgets import QWidget
 
 from utils.colors import BLACK, WHITE, RED
 from utils.reference import image, FLAG_ALIGN_LEFT, format_number
-from utils.size import GAME_WIDTH, RESOURCE_ITEM_HEIGHT, GAME_TOP, GAME_LEFT, DX, GAME_RIGHT
+from utils.size import GAME_WIDTH, RESOURCE_HEIGHT, GAME_TOP, GAME_LEFT, DX
 
 
 class ResourceItem:
@@ -14,7 +14,7 @@ class ResourceItem:
         self.monthly = monthly
 
 
-class ResourceWidget(QWidget):
+class ResourcePanel:
     items = ("energy", "mineral", "food", "customer",
              "alloy", "physics", "engineer", "beyond")
 
@@ -25,16 +25,13 @@ class ResourceWidget(QWidget):
         for item in self.items:
             setattr(self, item, ResourceItem(item))
 
-        self.setGeometry(GAME_LEFT, GAME_TOP, GAME_WIDTH, RESOURCE_ITEM_HEIGHT)
-
     def init(self, arguments: dict):
         for item in self.items:
             if arg := arguments.get(item):
                 setattr(getattr(self, item), "storage", arg["storage"])
                 setattr(getattr(self, item), "monthly", arg["monthly"])
 
-    def paintEvent(self, a0):
-        painter = QPainter(self)
+    def draw(self, painter: QPainter):
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
 
@@ -46,14 +43,14 @@ class ResourceWidget(QWidget):
                 start_x,
                 GAME_TOP,
                 self.item_width,
-                RESOURCE_ITEM_HEIGHT
+                RESOURCE_HEIGHT
             )
 
             painter.drawPixmap(
                 start_x,
                 GAME_TOP,
-                RESOURCE_ITEM_HEIGHT,
-                RESOURCE_ITEM_HEIGHT,
+                RESOURCE_HEIGHT,
+                RESOURCE_HEIGHT,
                 image(r.name)
             )
 
@@ -61,19 +58,19 @@ class ResourceWidget(QWidget):
                 painter.setPen(RED)
 
             painter.drawText(
-                start_x + RESOURCE_ITEM_HEIGHT + DX * 5,
+                start_x + RESOURCE_HEIGHT + DX * 5,
                 GAME_TOP,
-                self.item_width - RESOURCE_ITEM_HEIGHT,
-                RESOURCE_ITEM_HEIGHT // 2,
+                self.item_width - RESOURCE_HEIGHT,
+                RESOURCE_HEIGHT // 2,
                 FLAG_ALIGN_LEFT,
                 format_number(r.storage)
             )
 
             painter.drawText(
-                start_x + RESOURCE_ITEM_HEIGHT + DX * 5,
-                GAME_TOP + RESOURCE_ITEM_HEIGHT // 2,
-                self.item_width - RESOURCE_ITEM_HEIGHT,
-                RESOURCE_ITEM_HEIGHT // 2,
+                start_x + RESOURCE_HEIGHT + DX * 5,
+                GAME_TOP + RESOURCE_HEIGHT // 2,
+                self.item_width - RESOURCE_HEIGHT,
+                RESOURCE_HEIGHT // 2,
                 FLAG_ALIGN_LEFT,
                 format_number(r.monthly, True)
             )
@@ -81,9 +78,7 @@ class ResourceWidget(QWidget):
             if r.monthly < 0:
                 painter.setPen(BLACK)
 
-    def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
-        pos = a0.pos()
-        x, y = pos.x(), pos.y()
+    def click(self, x, button) -> None:
         name = self.items[x // self.item_width]
-        click = "Left" if a0.button() == Qt.MouseButton.LeftButton else "Right"
+        click = "Left" if button == Qt.MouseButton.LeftButton else "Right"
         print(f"{click} click in: {name}")
