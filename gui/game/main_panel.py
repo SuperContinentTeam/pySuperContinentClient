@@ -1,6 +1,6 @@
 from PyQt6.QtCore import pyqtSignal, QObject
 from PyQt6.QtGui import QPainter, QPaintEvent, QMouseEvent, QGuiApplication
-from PyQt6.QtWidgets import QMainWindow, QListView
+from PyQt6.QtWidgets import QMainWindow
 
 from gui.game.game_state.state import GameState
 from gui.game.widgets.filter_panel import FilterPanel
@@ -12,21 +12,8 @@ from utils.settings import TITLE
 from utils.size import (
     WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM, RESOURCE_LEFT, RESOURCE_RIGHT, RESOURCE_TOP,
     RESOURCE_BOTTOM, WORLD_LEFT, WORLD_RIGHT, WORLD_TOP, WORLD_BOTTOM, FILTER_LEFT, FILTER_RIGHT, FILTER_TOP,
-    FILTER_BOTTOM, SCHEDULE_LEFT, SCHEDULE_TOP, SCHEDULE_WIDTH, SCHEDULE_HEIGHT
+    FILTER_BOTTOM
 )
-
-
-def build_schedule_panel(parent):
-    widget = QListView(parent)
-    print(SCHEDULE_LEFT + SCHEDULE_WIDTH)
-    print(WORLD_RIGHT)
-    widget.setGeometry(
-        SCHEDULE_LEFT,
-        SCHEDULE_TOP,
-        SCHEDULE_WIDTH,
-        SCHEDULE_HEIGHT
-    )
-    return widget
 
 
 class Signal(QObject):
