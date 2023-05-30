@@ -1,10 +1,9 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPainter
-from PyQt6.QtWidgets import QWidget
 
 from utils.colors import BLACK, WHITE, RED
 from utils.reference import image, FLAG_ALIGN_LEFT, format_number
-from utils.size import GAME_WIDTH, RESOURCE_HEIGHT, GAME_TOP, GAME_LEFT
+from utils.size import GAME_WIDTH, RESOURCE_HEIGHT
 
 
 class ResourceItem:
@@ -37,18 +36,18 @@ class ResourcePanel:
 
         for i, item in enumerate(self.items):
             r: ResourceItem = getattr(self, item)
-            start_x = self.item_width * i + GAME_LEFT
+            start_x = self.item_width * i
 
             painter.drawRect(
                 start_x,
-                GAME_TOP,
+                0,
                 self.item_width,
                 RESOURCE_HEIGHT
             )
 
             painter.drawPixmap(
                 start_x,
-                GAME_TOP,
+                0,
                 RESOURCE_HEIGHT,
                 RESOURCE_HEIGHT,
                 image(r.name)
@@ -59,7 +58,7 @@ class ResourcePanel:
 
             painter.drawText(
                 start_x + RESOURCE_HEIGHT + 5,
-                GAME_TOP,
+                0,
                 self.item_width - RESOURCE_HEIGHT,
                 RESOURCE_HEIGHT // 2,
                 FLAG_ALIGN_LEFT,
@@ -68,7 +67,7 @@ class ResourcePanel:
 
             painter.drawText(
                 start_x + RESOURCE_HEIGHT + 5,
-                GAME_TOP + RESOURCE_HEIGHT // 2,
+                0 + RESOURCE_HEIGHT // 2,
                 self.item_width - RESOURCE_HEIGHT,
                 RESOURCE_HEIGHT // 2,
                 FLAG_ALIGN_LEFT,

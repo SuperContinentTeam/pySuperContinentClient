@@ -6,7 +6,7 @@ from PyQt6.QtGui import QPainter
 from gui.game.game_state.block import Block
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
-from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT
+from utils.size import WORLD_HEIGHT, WORLD_TOP
 
 
 class WorldSignal(QObject):
@@ -31,7 +31,7 @@ class WorldPanel:
         for block in self.blocks.values():
             painter.setBrush(WHITE)
             rect = QRect(
-                block.ix * self.block_width + GAME_LEFT,
+                block.ix * self.block_width,
                 block.iy * self.block_width + WORLD_TOP,
                 self.block_width,
                 self.block_width
