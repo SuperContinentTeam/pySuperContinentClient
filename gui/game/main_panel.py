@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import QMainWindow
 
 from gui.game.game_state.state import GameState
 from gui.game.widgets.filter_panel import FilterPanel
+from gui.game.widgets.information_panel import InformationPanel
 from gui.game.widgets.message_panel import MessageBoxPanel
 from gui.game.widgets.resource_widget import ResourcePanel
 from gui.game.widgets.schedule_panel import SchedulePanel
@@ -50,6 +51,8 @@ class MainGamePanel(QMainWindow):
         self.message_box = MessageBoxPanel(self)
         # 消息输入框
         self.text_input = TextInputPanel(self)
+        # 信息显示框
+        self.information_panel = InformationPanel(self)
 
         # 初始化信号连接
         self.init_signal()
