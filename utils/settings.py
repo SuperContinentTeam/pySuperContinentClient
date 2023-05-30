@@ -5,6 +5,6 @@ ASSET_DIR = BASE_DIR.joinpath("assets")
 IMAGE_DIR = ASSET_DIR.joinpath("images")
 
 NAME = "SuperContinent"
-VERSION = "0.0.1"
+VERSION = "2.2"
 
 TITLE = f"{NAME} v{VERSION}"

@@ -13,3 +13,5 @@ class TextInputPanel(QTextEdit):
             INPUT_WIDTH,
             INPUT_HEIGHT
         )
+
+        self.setPlaceholderText("输入消息或指令，按回车键确认")

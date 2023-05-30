@@ -12,6 +12,3 @@ class InformationPanel(QTextBrowser):
             INFORMATION_WIDTH,
             INFORMATION_HEIGHT
         )
-
-        for i in range(3):
-            self.append("<h2>hello world</h2>")
