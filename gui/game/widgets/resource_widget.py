@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QWidget
 
 from utils.colors import BLACK, WHITE, RED
 from utils.reference import image, FLAG_ALIGN_LEFT, format_number
-from utils.size import GAME_WIDTH, RESOURCE_HEIGHT, GAME_TOP, GAME_LEFT, DX
+from utils.size import GAME_WIDTH, RESOURCE_HEIGHT, GAME_TOP, GAME_LEFT
 
 
 class ResourceItem:
@@ -58,7 +58,7 @@ class ResourcePanel:
                 painter.setPen(RED)
 
             painter.drawText(
-                start_x + RESOURCE_HEIGHT + DX * 5,
+                start_x + RESOURCE_HEIGHT + 5,
                 GAME_TOP,
                 self.item_width - RESOURCE_HEIGHT,
                 RESOURCE_HEIGHT // 2,
@@ -67,7 +67,7 @@ class ResourcePanel:
             )
 
             painter.drawText(
-                start_x + RESOURCE_HEIGHT + DX * 5,
+                start_x + RESOURCE_HEIGHT + 5,
                 GAME_TOP + RESOURCE_HEIGHT // 2,
                 self.item_width - RESOURCE_HEIGHT,
                 RESOURCE_HEIGHT // 2,

@@ -6,7 +6,7 @@ from PyQt6.QtGui import QPainter
 from gui.game.game_state.block import Block
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
-from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT, GAME_BOTTOM
+from utils.size import WORLD_HEIGHT, WORLD_TOP, GAME_LEFT
 
 
 class WorldSignal(QObject):

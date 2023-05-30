@@ -1,17 +1,17 @@
-from PyQt6.QtWidgets import QPlainTextEdit, QWidget
+from PyQt6.QtWidgets import QTextBrowser
 
-from utils.size import MESSAGE_BOX_HEIGHT, WORLD_HEIGHT, GAME_LEFT, GAME_BOTTOM
+from utils.size import MESSAGE_BOX_LEFT, MESSAGE_BOX_TOP, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT
 
 
-class MessageBoxPanel(QWidget):
+class MessageBoxPanel(QTextBrowser):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.parent = self.parent()
-        self.plain_text = QPlainTextEdit(self.parent)
-
-        self.plain_text.setGeometry(
-            GAME_LEFT,
-            GAME_BOTTOM - MESSAGE_BOX_HEIGHT,
-            WORLD_HEIGHT,
+        self.setGeometry(
+            MESSAGE_BOX_LEFT,
+            MESSAGE_BOX_TOP,
+            MESSAGE_BOX_WIDTH,
             MESSAGE_BOX_HEIGHT
         )
+
+        for i in range(3):
+            self.append("<h2>hello world</h2>")
