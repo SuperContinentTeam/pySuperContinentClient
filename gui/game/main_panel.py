@@ -77,8 +77,8 @@ class MainGamePanel(QMainWindow):
             self.resource_panel.click(x - RESOURCE_LEFT, button)
 
         #  检查区划板块
-        if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:
-            self.zoning_panel.click(x - ZONING_LEFT, y - ZONING_TOP, button)
+        # if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:
+        #     self.zoning_panel.click(x - ZONING_LEFT, y - ZONING_TOP, button)
 
         # 检查世界板块
         if WORLD_LEFT < x < WORLD_RIGHT and WORLD_TOP < y < WORLD_BOTTOM:
