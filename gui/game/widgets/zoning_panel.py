@@ -6,7 +6,6 @@ from PyQt6.QtGui import QPainter
 from gui.game.game_state.elements import Block
 from gui.game.game_state.state import GameState
 from utils.colors import BLACK, WHITE
-from utils.reference import FLAG_ALIGN_CENTER
 from utils.size import ZONING_HEIGHT, ZONING_LEFT, ZONING_TOP
 
 
@@ -51,7 +50,6 @@ class ZoningPanel:
                     self.item_width
                 )
                 painter.drawRect(rect)
-                painter.drawText(rect, FLAG_ALIGN_CENTER, f"{zoning.ix},{zoning.iy}")
 
     def click(self, x, y, button) -> None:
         click = "Left" if button == Qt.MouseButton.LeftButton else "Right"

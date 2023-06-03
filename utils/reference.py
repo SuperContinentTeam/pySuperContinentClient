@@ -10,6 +10,9 @@ FLAG_ALIGN_LEFT = Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
 # 文字居中
 FLAG_ALIGN_CENTER = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
 
+# 地块环境列表
+BLOCK_ENV_LIST = (-2, -1, 0, 1, 2)
+
 
 @lru_cache
 def image(name):

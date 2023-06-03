@@ -1,12 +1,8 @@
-from typing import Dict, Tuple
+from PyQt6.QtCore import QRect, Qt
+from PyQt6.QtGui import QPainter, QColor
 
-from PyQt6.QtCore import QRect, Qt, pyqtSignal, QObject
-from PyQt6.QtGui import QPainter
-
-from gui.game.game_state.elements import Block
 from gui.game.game_state.state import GameState
-from utils.colors import BLACK, WHITE
-from utils.reference import FLAG_ALIGN_CENTER
+from utils.colors import BLACK, EnvironmentColor
 from utils.size import WORLD_HEIGHT, WORLD_TOP
 
 
@@ -21,7 +17,8 @@ class WorldPanel:
     def draw(self, painter: QPainter):
         painter.setPen(BLACK)
         for block in self.state.world_map.values():
-            painter.setBrush(WHITE)
+            color: QColor = EnvironmentColor[block.env]
+            painter.setBrush(color)
             rect = QRect(
                 block.ix * self.block_width,
                 block.iy * self.block_width + WORLD_TOP,
@@ -29,7 +26,6 @@ class WorldPanel:
                 self.block_width
             )
             painter.drawRect(rect)
-            painter.drawText(rect, FLAG_ALIGN_CENTER, f"{block.ix}, {block.iy}")
 
     def click(self, x, y, button: Qt.MouseButton):
         click = "Left" if button == Qt.MouseButton.LeftButton else "Right"

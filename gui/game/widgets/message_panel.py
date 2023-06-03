@@ -13,5 +13,5 @@ class MessageBoxPanel(QTextBrowser):
             MESSAGE_BOX_HEIGHT
         )
 
-        for i in range(10):
-            self.append("<h2>hello world</h2>")
+        # for i in range(10):
+        #     self.append("<h2>hello world</h2>")

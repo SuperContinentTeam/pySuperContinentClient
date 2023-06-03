@@ -3,9 +3,11 @@ import random
 
 # 世界地块
 class Block:
-    def __init__(self, c, r):
+    def __init__(self, c, r, env):
         self.ix = c
         self.iy = r
+        self.env = env
+
         self.zoning_number = random.randint(3, 6)
 
     def __str__(self) -> str:
