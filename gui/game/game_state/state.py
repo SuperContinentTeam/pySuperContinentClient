@@ -5,8 +5,22 @@ from collections import defaultdict
 from PyQt6.QtCore import QObject, pyqtSignal
 
 from gui.game.game_state.elements import Block, ZoningBlock
+from gui.game.game_state.player import Player
+from gui.game.game_state.reference import FilterName
 from utils.reference import BLOCK_ENV_LIST
 from utils.weights import BlockEnvWidget
+
+
+# 初始化玩家
+def initial_player(world_map: Iterable[Block], number):
+    choices_blocks = random.choices([block for block in world_map if block.env == 0], k=number)
+    players = list()
+    for i in range(number):
+        player = Player(str(i))
+        player.add_block(choices_blocks[i])
+        players.append(player)
+
+    return players
 
 
 # 初始化世界地图
@@ -35,6 +49,7 @@ def initial_zoning(blocks: Iterable[Block]) -> Dict[Block, Dict[Tuple[int, int],
 
 class StateSignal(QObject):
     click_world_block = pyqtSignal(tuple)
+    click_filter_panel = pyqtSignal(int)
 
 
 class GameState:
@@ -49,4 +64,8 @@ class GameState:
     def __init__(self, ws=10):
         self.world_size = ws
         self.world_map = initial_world(ws)
-        self.zoning_map = initial_zoning(self.world_map.values())
+
+        blocks = self.world_map.values()
+        self.zoning_map = initial_zoning(blocks)
+        self.players = initial_player(blocks, 1)
+        self.filter = FilterName.DISCOVER  # 探索滤镜

@@ -2,6 +2,7 @@ from PyQt6.QtCore import pyqtSignal, QObject
 from PyQt6.QtGui import QPainter, QPaintEvent, QMouseEvent, QGuiApplication
 from PyQt6.QtWidgets import QMainWindow
 
+from gui.game.game_state.reference import FilterName
 from gui.game.game_state.state import GameState
 from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.information_panel import InformationPanel
@@ -58,7 +59,10 @@ class MainGamePanel(QMainWindow):
         self.init_signal()
 
     def init_signal(self):
-        self.state.signals.click_world_block.connect(self.update_zoning_panel)
+        s = self.state.signals
+
+        s.click_world_block.connect(self.update_zoning_panel)
+        s.click_filter_panel.connect(self.update_world_display)
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
@@ -77,8 +81,8 @@ class MainGamePanel(QMainWindow):
             self.resource_panel.click(x - RESOURCE_LEFT, button)
 
         #  检查区划板块
-        # if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:
-        #     self.zoning_panel.click(x - ZONING_LEFT, y - ZONING_TOP, button)
+        if ZONING_LEFT < x < ZONING_RIGHT and ZONING_TOP < y < ZONING_BOTTOM:
+            self.zoning_panel.click(x - ZONING_LEFT, y - ZONING_TOP, button)
 
         # 检查世界板块
         if WORLD_LEFT < x < WORLD_RIGHT and WORLD_TOP < y < WORLD_BOTTOM:
@@ -105,4 +109,9 @@ class MainGamePanel(QMainWindow):
     # 更新区划板块
     def update_zoning_panel(self, pos):
         self.zoning_panel.display_block = self.state.world_map[pos]
+        self.update()
+
+    # 选择滤镜后更新地图渲染
+    def update_world_display(self, index):
+        self.state.filter = FilterName(index)
         self.update()

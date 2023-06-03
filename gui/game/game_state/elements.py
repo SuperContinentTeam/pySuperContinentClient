@@ -7,6 +7,8 @@ class Block:
         self.ix = c
         self.iy = r
         self.env = env
+        self.visitable = True
+        self.player = None
 
         self.zoning_number = random.randint(3, 6)
 

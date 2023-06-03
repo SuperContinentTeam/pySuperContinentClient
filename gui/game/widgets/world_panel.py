@@ -1,9 +1,23 @@
 from PyQt6.QtCore import QRect, Qt
 from PyQt6.QtGui import QPainter, QColor
 
+from gui.game.game_state.elements import Block
+from gui.game.game_state.reference import FilterName
 from gui.game.game_state.state import GameState
-from utils.colors import BLACK, EnvironmentColor
+from utils.colors import BLACK, EnvironmentColor, WHITE
 from utils.size import WORLD_HEIGHT, WORLD_TOP
+
+
+def get_current_color(state: GameState, block: Block):
+    # 如果是探索滤镜
+    if state.filter == FilterName.DISCOVER:
+        return EnvironmentColor[block.env] if block.visitable else WHITE
+
+    # 如果是领土滤镜
+    if state.filter == FilterName.PLAYER:
+        return WHITE if block.player is None else block.player.color
+
+    return WHITE
 
 
 class WorldPanel:
@@ -17,8 +31,7 @@ class WorldPanel:
     def draw(self, painter: QPainter):
         painter.setPen(BLACK)
         for block in self.state.world_map.values():
-            color: QColor = EnvironmentColor[block.env]
-            painter.setBrush(color)
+            painter.setBrush(get_current_color(self.state, block))
             rect = QRect(
                 block.ix * self.block_width,
                 block.iy * self.block_width + WORLD_TOP,
