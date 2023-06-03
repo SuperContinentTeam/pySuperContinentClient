@@ -4,31 +4,23 @@ from PyQt6.QtCore import QRect, Qt, pyqtSignal, QObject
 from PyQt6.QtGui import QPainter
 
 from gui.game.game_state.block import Block
+from gui.game.game_state.state import GameState
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
 from utils.size import WORLD_HEIGHT, WORLD_TOP
 
 
-class WorldSignal(QObject):
-    update_zoning_panel = pyqtSignal(tuple)
-
-
 class WorldPanel:
-    signal = WorldSignal()
+    state = GameState()
 
-    def __init__(self, size=10):
-        self.size = size
-        self.number = size * size
-        self.block_width = WORLD_HEIGHT // size
-
-        self.blocks: Dict[Tuple[int, int], Block] = {
-            (i, j): Block(i, j)
-            for i in range(size) for j in range(size)
-        }
+    def __init__(self):
+        self.size = self.state.world_size
+        self.number = self.size * self.size
+        self.block_width = WORLD_HEIGHT // self.size
 
     def draw(self, painter: QPainter):
         painter.setPen(BLACK)
-        for block in self.blocks.values():
+        for block in self.state.world_map.values():
             painter.setBrush(WHITE)
             rect = QRect(
                 block.ix * self.block_width,
@@ -45,6 +37,6 @@ class WorldPanel:
         row = y // self.block_width
 
         # 点击地块时 触发更新信号让界面局部刷新区划板块
-        self.signal.update_zoning_panel.emit((col, row))  # type: ignore
+        self.state.signals.click_world_block.emit((col, row))
 
         print(f"{click} click in Pos({x}, {y}), BlockWidth: {self.block_width}")

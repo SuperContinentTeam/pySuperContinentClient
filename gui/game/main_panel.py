@@ -31,7 +31,7 @@ class MainGamePanel(QMainWindow):
         self.last_window = self.parent()
         # 初始参数
         self.arguments = arguments
-        self.game_state = GameState(10)
+        self.state = GameState(10)
 
         self.setWindowTitle(TITLE)
         self.resize(WIDTH, HEIGHT)
@@ -58,7 +58,7 @@ class MainGamePanel(QMainWindow):
         self.init_signal()
 
     def init_signal(self):
-        self.world.signal.update_zoning_panel.connect(self.update_zoning_panel)
+        self.state.signals.click_world_block.connect(self.update_zoning_panel)
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         painter = QPainter(self)
@@ -104,5 +104,5 @@ class MainGamePanel(QMainWindow):
 
     # 更新区划板块
     def update_zoning_panel(self, pos):
-        self.zoning_panel.display_block = self.world.blocks[pos]
+        self.zoning_panel.display_block = self.state.world_map[pos]
         self.update()
