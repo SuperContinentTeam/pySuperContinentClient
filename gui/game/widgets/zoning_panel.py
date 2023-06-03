@@ -3,7 +3,8 @@ from typing import Optional
 from PyQt6.QtCore import QRect, Qt
 from PyQt6.QtGui import QPainter
 
-from gui.game.game_state.block import Block
+from gui.game.game_state.elements import Block
+from gui.game.game_state.state import GameState
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
 from utils.size import ZONING_HEIGHT, ZONING_LEFT, ZONING_TOP
@@ -20,6 +21,8 @@ class ZoningBlock:
 
 
 class ZoningPanel:
+    state = GameState()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -30,7 +33,8 @@ class ZoningPanel:
         painter.setPen(BLACK)
         painter.setBrush(WHITE)
 
-        if self.display_block is None:
+        zoning: Optional[ZoningBlock] = self.state.zoning_map.get(self.display_block)
+        if zoning is None:
             painter.drawRect(
                 ZONING_LEFT,
                 ZONING_TOP,
@@ -39,16 +43,15 @@ class ZoningPanel:
             )
         else:
             self.item_width = ZONING_HEIGHT // self.display_block.zoning_number
-            for i in range(self.display_block.zoning_number):
-                for j in range(self.display_block.zoning_number):
-                    rect = QRect(
-                        i * self.item_width + ZONING_LEFT,
-                        j * self.item_width + ZONING_TOP,
-                        self.item_width,
-                        self.item_width
-                    )
-                    painter.drawRect(rect)
-                    painter.drawText(rect, FLAG_ALIGN_CENTER, f"{i},{j}")
+            for zoning in self.state.zoning_map[self.display_block].values():
+                rect = QRect(
+                    zoning.ix * self.item_width + ZONING_LEFT,
+                    zoning.iy * self.item_width + ZONING_TOP,
+                    self.item_width,
+                    self.item_width
+                )
+                painter.drawRect(rect)
+                painter.drawText(rect, FLAG_ALIGN_CENTER, f"{zoning.ix},{zoning.iy}")
 
     def click(self, x, y, button) -> None:
         click = "Left" if button == Qt.MouseButton.LeftButton else "Right"

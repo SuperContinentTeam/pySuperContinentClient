@@ -3,7 +3,7 @@ from typing import Dict, Tuple
 from PyQt6.QtCore import QRect, Qt, pyqtSignal, QObject
 from PyQt6.QtGui import QPainter
 
-from gui.game.game_state.block import Block
+from gui.game.game_state.elements import Block
 from gui.game.game_state.state import GameState
 from utils.colors import BLACK, WHITE
 from utils.reference import FLAG_ALIGN_CENTER
