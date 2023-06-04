@@ -1,4 +1,4 @@
-from PyQt6.QtCore import pyqtSignal, QObject
+from PyQt6.QtCore import pyqtSignal, QObject, Qt
 from PyQt6.QtGui import QPainter, QPaintEvent, QMouseEvent, QGuiApplication
 from PyQt6.QtWidgets import QMainWindow
 
@@ -35,7 +35,10 @@ class MainGamePanel(QMainWindow):
         self.state = GameState(10)
 
         self.setWindowTitle(TITLE)
-        self.resize(WIDTH, HEIGHT)
+        self.setWindowFlags(
+            Qt.WindowType.Window | Qt.WindowType.CustomizeWindowHint | Qt.WindowType.WindowCloseButtonHint
+        )
+        self.setFixedSize(WIDTH, HEIGHT)
         self.move_center()
 
         # 资源板块

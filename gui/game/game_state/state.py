@@ -6,18 +6,23 @@ from PyQt6.QtCore import QObject, pyqtSignal
 
 from gui.game.game_state.elements import Block, ZoningBlock
 from gui.game.game_state.player import Player
-from gui.game.game_state.reference import FilterName
+from gui.game.game_state.reference import FilterName, ResourceList
+from gui.game.game_state.resource import Resource
 from utils.reference import BLOCK_ENV_LIST
 from utils.weights import BlockEnvWidget
 
 
 # 初始化玩家
 def initial_player(world_map: Iterable[Block], number):
-    choices_blocks = random.choices([block for block in world_map if block.env == 0], k=number)
+    choices_blocks = [block for block in world_map if block.env == 0]
+    choices_blocks = random.choices(choices_blocks, k=number)
     players = list()
     for i in range(number):
         player = Player(str(i))
-        player.add_block(choices_blocks[i])
+        block = choices_blocks[i]
+        # 玩家地块区划尺寸默认为 4
+        block.zoning_number = 4
+        player.add_block(block)
         players.append(player)
 
     return players
@@ -47,6 +52,11 @@ def initial_zoning(blocks: Iterable[Block]) -> Dict[Block, Dict[Tuple[int, int],
     return result
 
 
+# 初始化资源
+def initial_resource(items: Iterable):
+    return {item: Resource(item) for item in items}
+
+
 class StateSignal(QObject):
     click_world_block = pyqtSignal(tuple)
     click_filter_panel = pyqtSignal(int)
@@ -66,6 +76,10 @@ class GameState:
         self.world_map = initial_world(ws)
 
         blocks = self.world_map.values()
-        self.zoning_map = initial_zoning(blocks)
         self.players = initial_player(blocks, 1)
+
+        self.zoning_map = initial_zoning(blocks)
+
         self.filter = FilterName.DISCOVER  # 探索滤镜
+
+        self.resource_map = initial_resource(ResourceList)

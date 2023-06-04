@@ -1,23 +1,23 @@
 from PyQt6.QtCore import QRect, Qt
-from PyQt6.QtGui import QPainter, QColor
+from PyQt6.QtGui import QPainter
 
 from gui.game.game_state.elements import Block
 from gui.game.game_state.reference import FilterName
 from gui.game.game_state.state import GameState
-from utils.colors import BLACK, EnvironmentColor, WHITE
+from utils.colors import BLACK, EnvironmentColor, DIM_GREY
 from utils.size import WORLD_HEIGHT, WORLD_TOP
 
 
 def get_current_color(state: GameState, block: Block):
     # 如果是探索滤镜
     if state.filter == FilterName.DISCOVER:
-        return EnvironmentColor[block.env] if block.visitable else WHITE
+        return EnvironmentColor[block.env] if block.visitable else DIM_GREY
 
     # 如果是领土滤镜
     if state.filter == FilterName.PLAYER:
-        return WHITE if block.player is None else block.player.color
+        return DIM_GREY if block.player is None else block.player.color
 
-    return WHITE
+    return DIM_GREY
 
 
 class WorldPanel:
