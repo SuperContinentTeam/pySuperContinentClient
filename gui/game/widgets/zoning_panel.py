@@ -3,20 +3,10 @@ from typing import Optional
 from PyQt6.QtCore import QRect, Qt
 from PyQt6.QtGui import QPainter
 
-from gui.game.game_state.elements import Block
+from gui.game.game_state.elements import Block, ZoningBlock
 from gui.game.game_state.state import GameState
 from utils.colors import BLACK, WHITE
 from utils.size import ZONING_HEIGHT, ZONING_LEFT, ZONING_TOP
-
-
-class ZoningBlock:
-    def __init__(self, col, row, block: Block):
-        self.ix = col
-        self.iy = row
-        self.block = block
-
-    def __str__(self):
-        return f"<Zoning: {self.ix}, {self.iy}>"
 
 
 class ZoningPanel:

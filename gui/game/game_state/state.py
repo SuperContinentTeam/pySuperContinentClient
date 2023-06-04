@@ -80,6 +80,6 @@ class GameState:
 
         self.zoning_map = initial_zoning(blocks)
 
-        self.filter = FilterName.DISCOVER  # 探索滤镜
+        self.filter = FilterName.PLAYER  # 领土滤镜
 
         self.resource_map = initial_resource(ResourceList)
