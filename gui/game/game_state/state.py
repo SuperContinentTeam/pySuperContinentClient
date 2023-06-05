@@ -83,3 +83,15 @@ class GameState:
         self.filter = FilterName.PLAYER  # 领土滤镜
 
         self.resource_map = initial_resource(ResourceList)
+
+
+class State:
+    __instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = object.__new__(cls)
+        return cls.__instance
+
+    def __init__(self, arguments=None):
+        self.name = arguments["name"]

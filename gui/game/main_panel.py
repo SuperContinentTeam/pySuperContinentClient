@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import QMainWindow
 
 from gui.game.game_state.reference import FilterName
 from gui.game.game_state.state import GameState
+from gui.game.websocket_client.client import WSClientThread
 from gui.game.widgets.filter_panel import FilterPanel
 from gui.game.widgets.information_panel import InformationPanel
 from gui.game.widgets.message_panel import MessageBoxPanel
@@ -29,6 +30,7 @@ class MainGamePanel(QMainWindow):
 
     def __init__(self, arguments, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.ws_thread = None
         self.last_window = self.parent()
         # 初始参数
         self.arguments = arguments
@@ -60,6 +62,13 @@ class MainGamePanel(QMainWindow):
 
         # 初始化信号连接
         self.init_signal()
+        # 创建ws客户端线程
+        self.init_ws()
+
+    def init_ws(self):
+        self.ws_thread = WSClientThread("ws://127.0.0.1:55555/ws")
+        self.ws_thread.message_received.connect(lambda message: print("Received:", message))
+        self.ws_thread.start()
 
     def init_signal(self):
         s = self.state.signals
