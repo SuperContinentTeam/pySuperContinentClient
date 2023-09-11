@@ -13,7 +13,7 @@ from gui.game.widgets.schedule_panel import SchedulePanel
 from gui.game.widgets.text_input_panel import TextInputPanel
 from gui.game.widgets.world_panel import WorldPanel
 from gui.game.widgets.zoning_panel import ZoningPanel
-from utils.settings import TITLE
+from utils.settings import TITLE, SERVER
 from utils.size import (
     WIDTH, HEIGHT, ZONING_LEFT, ZONING_RIGHT, ZONING_TOP, ZONING_BOTTOM, RESOURCE_LEFT, RESOURCE_RIGHT, RESOURCE_TOP,
     RESOURCE_BOTTOM, WORLD_LEFT, WORLD_RIGHT, WORLD_TOP, WORLD_BOTTOM, FILTER_LEFT, FILTER_RIGHT, FILTER_TOP,
@@ -66,7 +66,7 @@ class MainGamePanel(QMainWindow):
         self.init_ws()
 
     def init_ws(self):
-        self.ws_thread = WSClientThread("ws://127.0.0.1:55555/ws")
+        self.ws_thread = WSClientThread(SERVER)
         self.ws_thread.message_received.connect(lambda message: print("Received:", message))
         self.ws_thread.start()
 
