@@ -1,4 +1,3 @@
-# from PyQt5.QtCore import QTimer
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QMainWindow, QGridLayout, QPushButton, QLabel, QWidget, QLineEdit,
@@ -42,7 +41,7 @@ class SingleSettingWindow(QMainWindow):
         layout.addWidget(self.combo_box_world_size, 0, 1)
 
         layout.addWidget(QLabel("AI数量"), 1, 0)
-        self.slider_ai_count = QSlider(Qt.Horizontal)
+        self.slider_ai_count = QSlider(Qt.Orientation.Horizontal)
         self.slider_ai_count.setMinimum(0)
         self.slider_ai_count.setMaximum(20)
         self.slider_ai_count.valueChanged.connect(self.slider_ai_count_change_value)  # type: ignore
