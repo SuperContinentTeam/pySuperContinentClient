@@ -1,7 +1,7 @@
-from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QApplication
+from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QApplication, QMessageBox
 
 from gui.root_setting_window import RootSettingWindow
-from utils.settings import TITLE
+from utils.settings import TITLE, BASE_DIR
 
 from gui.single_setting_window import SingleSettingWindow
 

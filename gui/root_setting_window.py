@@ -1,6 +1,32 @@
 from PyQt6.QtWidgets import QMainWindow, QGridLayout, QLabel, QLineEdit, QWidget, QPushButton, QApplication
 
-from utils.settings import TITLE
+from gui.game.game_state.state import GameState
+from utils.settings import TITLE, BASE_DIR
+
+
+def init_arguments():
+    result = {
+        "ip": "",
+        "port": "",
+        "name": ""
+    }
+    try:
+        with open(BASE_DIR.joinpath("cache"), "r", encoding="utf-8") as f:
+            lines = f.read().strip().split("\n")
+            result["name"] = lines[0].strip()
+            result["ip"] = lines[1].strip()
+            result["port"] = lines[2].strip()
+    except Exception as e:
+        _ = e
+
+    return result
+
+
+def stay_arguments(arguments: dict):
+    with open(BASE_DIR.joinpath("cache"), "w", encoding="utf-8") as f:
+        f.writelines(arguments["name"] + "\n")
+        f.writelines(arguments["ip"] + "\n")
+        f.writelines(arguments["port"] + "\n")
 
 
 class RootSettingWindow(QMainWindow):
@@ -13,11 +39,7 @@ class RootSettingWindow(QMainWindow):
         self.setWindowTitle(TITLE)
         self.setGeometry(pos.x(), pos.y(), 400, 300)
 
-        self.arguments = {
-            "ip": "",
-            "port": "",
-            "name": ""
-        }
+        self.arguments = init_arguments()
 
         layout = QGridLayout()
 
@@ -45,5 +67,12 @@ class RootSettingWindow(QMainWindow):
         QApplication.quit()
 
     def submit(self):
+        self.arguments.update({
+            "name": self.name_edit.text().strip(),
+            "ip": self.ip_edit.text().strip(),
+            "port": self.port_edit.text().strip()
+        })
+        stay_arguments(self.arguments)
+        GameState.arguments = self.arguments
         self.hide()
         self.last_window.show()
