@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QMainWindow, QGridLayout, QPushButton, QLabel, QWidget, QLineEdit,
-    QSlider, QComboBox, QColorDialog, QCheckBox
+    QSlider, QComboBox, QColorDialog, QCheckBox, QApplication
 )
 
 from gui.game.main_panel import MainGamePanel
@@ -111,15 +111,14 @@ class SingleSettingWindow(QMainWindow):
         self.arguments["aiCount"] = value
 
     def click_game_start(self):
-        self.close()
+        self.hide()
         self.last_window.close()
         temp = MainGamePanel(parent=self.last_window, arguments=self.arguments)
         temp.show()
 
     def closeEvent(self, a0) -> None:
-        self.last_window.show()
-
-        return super().closeEvent(a0)
+        QApplication.quit()
 
     def close_window(self):
-        self.close()
+        self.hide()
+        self.last_window.show()
